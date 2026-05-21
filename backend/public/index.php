@@ -2,6 +2,11 @@
 
 use Illuminate\Http\Request;
 
+// Silence PHP 8.5 deprecation notices from Laravel's stock database.php config
+// (PDO::MYSQL_ATTR_SSL_CA) so they don't leak into JSON responses on the dev server.
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+ini_set('display_errors', '0');
+
 define('LARAVEL_START', microtime(true));
 
 // Determine if the application is in maintenance mode...
