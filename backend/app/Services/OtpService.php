@@ -17,7 +17,11 @@ class OtpService
 
     public function issue(string $phone): OtpVerification
     {
-        $code = (string) random_int(100000, 999999);
+        // Local/testing convenience: always issue the same dev code so the QA flow
+        // doesn't need to tail the log file. Production randomises per request.
+        $code = app()->environment('local', 'testing')
+            ? '123456'
+            : (string) random_int(100000, 999999);
 
         $record = OtpVerification::query()->create([
             'phone' => $phone,

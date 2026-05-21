@@ -225,7 +225,7 @@ class DatabaseSeeder extends Seeder
     private function seedTestPatient(): void
     {
         $patient = Patient::query()->create([
-            'phone' => '+94771234567',
+            'phone' => '+94752977591',
             'name' => 'Ibrahim Test',
             'email' => 'test@medihub.lk',
             'dob' => '1992-04-15',

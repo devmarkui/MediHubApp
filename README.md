@@ -29,7 +29,7 @@ Scan the QR code with **Expo Go**.
 - iPhone: open Camera, tap banner
 - Android: open Expo Go app → Scan QR
 
-Default test patient: phone `+94771234567`. OTP is logged to `backend/storage/logs/laravel.log` with marker `[OTP] phone={x} code={y}`.
+Default test patient: phone `+94752977591` (enter `0752977591` or `752977591` in the app). In `local` / `testing` the OTP is **always `123456`** — no need to read logs. Production randomises per request and sends via Notify.lk SMS (currently un-configured, see `KNOWN_ISSUES.md`).
 
 ### Environment
 
