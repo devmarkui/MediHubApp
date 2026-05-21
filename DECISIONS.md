@@ -55,4 +55,5 @@ Defaults chosen for things not explicitly specified in the build prompt.
 - Notify.lk SMS gateway — `NOTIFY_LK_API_KEY` blank, OTP is log-only in `local` (as required by spec).
 - Sentry DSN — blank in `.env.example`; integration scaffolded behind `EXPO_PUBLIC_SENTRY_DSN` / `SENTRY_LARAVEL_DSN` presence checks.
 - FCM service account JSON — not committed. `kreait/laravel-firebase` is installed but `services.fcm` left unconfigured; `expo-notifications` handles local-only reminders in Expo Go.
-- App store screenshots — placeholder paths created in `mobile/assets/store/`; final assets must be generated from a device build.
+- App store screenshots — placeholder folder `mobile/assets/store/` with a [README checklist](mobile/assets/store/README.md); final assets must be generated from a device build.
+- Brand artwork — the icon/splash/adaptive-icon PNGs in `mobile/assets/` are still the default `create-expo-app` placeholders. They are referenced correctly in `app.json` against the brand background `#0F766E`. Designed artwork must replace them before App Store / Play Store submission; the EAS build itself does not fail on the placeholder art.
