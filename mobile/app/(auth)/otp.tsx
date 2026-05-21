@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { authApi } from '@/api/auth';
@@ -89,48 +89,53 @@ export default function OtpScreen(): React.ReactElement {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
-      <View style={styles.body}>
-        <Text style={styles.title}>{t('auth.otpTitle')}</Text>
-        <Text style={styles.subtitle}>{t('auth.otpSubtitle', { phone })}</Text>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <View style={styles.body}>
+          <Text style={styles.title}>{t('auth.otpTitle')}</Text>
+          <Text style={styles.subtitle}>{t('auth.otpSubtitle', { phone })}</Text>
 
-        <View style={styles.boxes}>
-          {digits.map((d, i) => (
-            <TextInput
-              key={i}
-              ref={(ref) => {
-                inputs.current[i] = ref;
-              }}
-              value={d}
-              onChangeText={(v) => handleChange(i, v)}
-              onKeyPress={({ nativeEvent }) => {
-                if (nativeEvent.key === 'Backspace' && !d && i > 0) {
-                  inputs.current[i - 1]?.focus();
-                }
-              }}
-              keyboardType="number-pad"
-              maxLength={1}
-              accessibilityLabel={`Digit ${i + 1}`}
-              style={[styles.box, error ? styles.boxError : null, d ? styles.boxFilled : null]}
-            />
-          ))}
+          <View style={styles.boxes}>
+            {digits.map((d, i) => (
+              <TextInput
+                key={i}
+                ref={(ref) => {
+                  inputs.current[i] = ref;
+                }}
+                value={d}
+                onChangeText={(v) => handleChange(i, v)}
+                onKeyPress={({ nativeEvent }) => {
+                  if (nativeEvent.key === 'Backspace' && !d && i > 0) {
+                    inputs.current[i - 1]?.focus();
+                  }
+                }}
+                keyboardType="number-pad"
+                maxLength={1}
+                accessibilityLabel={`Digit ${i + 1}`}
+                style={[styles.box, error ? styles.boxError : null, d ? styles.boxFilled : null]}
+              />
+            ))}
+          </View>
+
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
+          <View style={styles.resendWrap}>
+            {resendIn > 0 ? (
+              <Text style={styles.resendCountdown}>{t('auth.otpResendIn', { seconds: resendIn })}</Text>
+            ) : (
+              <Pressable onPress={() => resend.mutate()} accessibilityRole="button">
+                <Text style={styles.resendCta}>{t('auth.otpResend')}</Text>
+              </Pressable>
+            )}
+          </View>
         </View>
 
-        {error ? <Text style={styles.errorText}>{error}</Text> : null}
-
-        <View style={styles.resendWrap}>
-          {resendIn > 0 ? (
-            <Text style={styles.resendCountdown}>{t('auth.otpResendIn', { seconds: resendIn })}</Text>
-          ) : (
-            <Pressable onPress={() => resend.mutate()} accessibilityRole="button">
-              <Text style={styles.resendCta}>{t('auth.otpResend')}</Text>
-            </Pressable>
-          )}
+        <View style={styles.ctaWrap}>
+          <Button label={t('auth.verify')} onPress={handleSubmit} loading={verify.isPending} />
         </View>
-      </View>
-
-      <View style={styles.ctaWrap}>
-        <Button label={t('auth.verify')} onPress={handleSubmit} loading={verify.isPending} />
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

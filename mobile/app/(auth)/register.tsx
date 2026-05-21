@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { authApi } from '@/api/auth';
@@ -61,54 +61,59 @@ export default function RegisterScreen(): React.ReactElement {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
-      <ScrollView contentContainerStyle={styles.body} keyboardShouldPersistTaps="handled">
-        <Text style={styles.title}>{t('auth.registerTitle')}</Text>
-        <Text style={styles.subtitle}>{t('auth.registerSubtitle')}</Text>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <ScrollView contentContainerStyle={styles.body} keyboardShouldPersistTaps="handled">
+          <Text style={styles.title}>{t('auth.registerTitle')}</Text>
+          <Text style={styles.subtitle}>{t('auth.registerSubtitle')}</Text>
 
-        <View style={{ height: spacing.xl }} />
+          <View style={{ height: spacing.xl }} />
 
-        <Controller
-          control={control}
-          name="name"
-          render={({ field: { onChange, value } }) => (
-            <Input
-              label={t('auth.name')}
-              value={value}
-              onChangeText={onChange}
-              autoCapitalize="words"
-              error={errors.name?.message}
-              accessibilityLabel={t('auth.name')}
-            />
-          )}
-        />
+          <Controller
+            control={control}
+            name="name"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                label={t('auth.name')}
+                value={value}
+                onChangeText={onChange}
+                autoCapitalize="words"
+                error={errors.name?.message}
+                accessibilityLabel={t('auth.name')}
+              />
+            )}
+          />
 
-        <View style={{ height: spacing.md }} />
+          <View style={{ height: spacing.md }} />
 
-        <Controller
-          control={control}
-          name="email"
-          render={({ field: { onChange, value } }) => (
-            <Input
-              label={t('auth.email')}
-              value={value ?? ''}
-              onChangeText={onChange}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              error={errors.email?.message}
-              accessibilityLabel={t('auth.email')}
-            />
-          )}
-        />
-      </ScrollView>
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                label={t('auth.email')}
+                value={value ?? ''}
+                onChangeText={onChange}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                error={errors.email?.message}
+                accessibilityLabel={t('auth.email')}
+              />
+            )}
+          />
+        </ScrollView>
 
-      <View style={styles.ctaWrap}>
-        <Button
-          label={t('auth.create')}
-          onPress={handleSubmit((d) => mutation.mutate(d))}
-          loading={mutation.isPending}
-          disabled={!isValid}
-        />
-      </View>
+        <View style={styles.ctaWrap}>
+          <Button
+            label={t('auth.create')}
+            onPress={handleSubmit((d) => mutation.mutate(d))}
+            loading={mutation.isPending}
+            disabled={!isValid}
+          />
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

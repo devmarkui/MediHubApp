@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Keyboard, StyleSheet, Text, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { authApi } from '@/api/auth';
@@ -45,40 +45,47 @@ export default function PhoneScreen(): React.ReactElement {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
-      <View style={styles.body}>
-        <Text style={styles.title}>{t('auth.phoneTitle')}</Text>
-        <Text style={styles.subtitle}>{t('auth.phoneSubtitle')}</Text>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <View style={styles.body}>
+          <Text style={styles.title}>{t('auth.phoneTitle')}</Text>
+          <Text style={styles.subtitle}>{t('auth.phoneSubtitle')}</Text>
 
-        <View style={styles.row}>
-          <View style={styles.prefix}>
-            <Text style={styles.prefixText}>{t('auth.phonePrefix')}</Text>
-          </View>
-          <View style={{ flex: 1 }}>
-            <Input
-              label={t('auth.phoneLabel')}
-              placeholder="7XXXXXXXX"
-              keyboardType="number-pad"
-              maxLength={10}
-              value={phone}
-              onChangeText={(v) => {
-                setPhone(v.replace(/\D/g, ''));
-                if (error) setError(null);
-              }}
-              error={error ?? undefined}
-              accessibilityHint={t('auth.phoneSubtitle')}
-            />
+          <View style={styles.row}>
+            <View style={styles.prefix}>
+              <Text style={styles.prefixText}>{t('auth.phonePrefix')}</Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Input
+                label={t('auth.phoneLabel')}
+                placeholder="7XXXXXXXX"
+                keyboardType="number-pad"
+                maxLength={10}
+                value={phone}
+                onChangeText={(v) => {
+                  setPhone(v.replace(/\D/g, ''));
+                  if (error) setError(null);
+                }}
+                error={error ?? undefined}
+                accessibilityHint={t('auth.phoneSubtitle')}
+                returnKeyType="done"
+                onSubmitEditing={handleSubmit}
+              />
+            </View>
           </View>
         </View>
-      </View>
 
-      <View style={styles.ctaWrap}>
-        <Button
-          label={t('auth.sendOtp')}
-          onPress={handleSubmit}
-          loading={mutation.isPending}
-          disabled={phone.length < 9}
-        />
-      </View>
+        <View style={styles.ctaWrap}>
+          <Button
+            label={t('auth.sendOtp')}
+            onPress={handleSubmit}
+            loading={mutation.isPending}
+            disabled={phone.length < 9}
+          />
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
