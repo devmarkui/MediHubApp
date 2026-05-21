@@ -1,0 +1,198 @@
+{
+  "common": {
+    "appName": "MediHub",
+    "ok": "சரி",
+    "cancel": "ரத்து",
+    "retry": "மீண்டும் முயற்சி",
+    "save": "சேமி",
+    "next": "அடுத்து",
+    "back": "பின்",
+    "continue": "தொடரவும்",
+    "loading": "ஏற்றுகிறது…",
+    "empty": "இங்கே இன்னும் எதுவும் இல்லை",
+    "yes": "ஆம்",
+    "no": "இல்லை",
+    "edit": "திருத்து",
+    "delete": "நீக்கு",
+    "confirm": "உறுதிப்படுத்து",
+    "skip": "தாண்டு",
+    "done": "முடிந்தது",
+    "search": "தேடு",
+    "viewAll": "அனைத்தையும் காண்க",
+    "close": "மூடு",
+    "today": "இன்று",
+    "tomorrow": "நாளை",
+    "verified": "உறுதிப்படுத்தப்பட்டது"
+  },
+  "errors": {
+    "network": "இணைய இணைப்பு இல்லை.",
+    "unknown": "பிழை ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்.",
+    "required": "தேவை",
+    "invalidPhone": "சரியான மொபைல் எண்ணை உள்ளிடவும்",
+    "invalidOtp": "6 இலக்க குறியீட்டை உள்ளிடவும்"
+  },
+  "auth": {
+    "onboardingTitle1": "உங்கள் ஆரோக்கியம், உங்கள் கையில்",
+    "onboardingBody1": "ஒவ்வொரு பரிசோதனை மற்றும் தொகுப்பும் ஒரே இடத்தில்.",
+    "onboardingTitle2": "ஒரே தட்டலில் முன்பதிவு",
+    "onboardingBody2": "மருத்துவரை மற்றும் நேரத்தை தேர்வு செய்க.",
+    "onboardingTitle3": "அறிக்கைகள் தயாரானவுடன்",
+    "onboardingBody3": "உங்கள் ஃபோனில் இருந்து பகிர்ந்து கொள்ளலாம்.",
+    "getStarted": "தொடங்குக",
+    "phoneTitle": "உள்நுழைய அல்லது பதிவு செய்க",
+    "phoneSubtitle": "உங்கள் ஃபோனுக்கு 6 இலக்க குறியீடு அனுப்பப்படும்.",
+    "phoneLabel": "மொபைல் எண்",
+    "phonePrefix": "+94",
+    "sendOtp": "குறியீட்டை அனுப்பு",
+    "otpTitle": "குறியீட்டை உள்ளிடவும்",
+    "otpSubtitle": "{{phone}} க்கு அனுப்பப்பட்டது",
+    "otpResendIn": "{{seconds}} வினாடிகளில் மீண்டும்",
+    "otpResend": "குறியீட்டை மீண்டும் அனுப்பு",
+    "verify": "சரிபார்",
+    "registerTitle": "உங்களைப் பற்றி கூறுங்கள்",
+    "registerSubtitle": "உங்களுக்காக MediHub-ஐ தனிப்பயனாக்குவோம்.",
+    "name": "முழு பெயர்",
+    "email": "மின்னஞ்சல் (விரும்பினால்)",
+    "dob": "பிறந்த தேதி (விரும்பினால்)",
+    "gender": "பாலினம்",
+    "create": "கணக்கை உருவாக்கு"
+  },
+  "tabs": {
+    "home": "முகப்பு",
+    "passbook": "பாஸ்புக்",
+    "book": "முன்பதிவு",
+    "packages": "தொகுப்புகள்",
+    "profile": "சுயவிவரம்"
+  },
+  "home": {
+    "morning": "காலை வணக்கம்",
+    "afternoon": "மதிய வணக்கம்",
+    "evening": "மாலை வணக்கம்",
+    "passbookLabel": "ஆரோக்கிய பாஸ்புக்",
+    "member": "உறுப்பினர்",
+    "since": "முதல்",
+    "blood": "இரத்த வகை",
+    "reports": "அறிக்கைகள்",
+    "packages": "தொகுப்புகள்",
+    "quickActions": "விரைவு செயல்கள்",
+    "actionBook": "முன்பதிவு",
+    "actionLabTests": "பரிசோதனைகள்",
+    "actionPackages": "தொகுப்புகள்",
+    "actionReports": "அறிக்கைகள்",
+    "upcoming": "வரவிருக்கும்",
+    "passbookEntries": "பாஸ்புக் பதிவுகள்",
+    "activeBadge": "செயலில்"
+  },
+  "passbook": {
+    "title": "பாஸ்புக்",
+    "filterAll": "அனைத்தும்",
+    "filterConsultation": "ஆலோசனை",
+    "filterLab": "பரிசோதனை",
+    "filterPackage": "தொகுப்பு",
+    "empty": "உங்கள் செயல்பாடுகள் இங்கே காண்பிக்கப்படும்."
+  },
+  "book": {
+    "title": "முன்பதிவு",
+    "consultantTitle": "மருத்துவர் ஆலோசனை",
+    "consultantBody": "மருத்துவரை மற்றும் நேரத்தை தேர்வு செய்க.",
+    "labTitle": "பரிசோதனைகள்",
+    "labBody": "பரிசோதனைகளை தேர்வு செய்க.",
+    "packageTitle": "ஆரோக்கிய தொகுப்புகள்",
+    "packageBody": "தள்ளுபடியுடன் சேர்ந்த பரிசோதனைகள்."
+  },
+  "doctors": {
+    "title": "மருத்துவரை தேர்வு செய்க",
+    "fee": "ஆலோசனை கட்டணம்",
+    "bookCta": "முன்பதிவு செய்க",
+    "pickDate": "தேதியை தேர்வு செய்க",
+    "pickSlot": "நேரத்தை தேர்வு செய்க",
+    "noSlots": "இந்த தேதிக்கு நேரங்கள் இல்லை.",
+    "confirmTitle": "உறுதிப்படுத்தவும்",
+    "confirmBody": "{{date}} அன்று {{time}} மணிக்கு {{doctor}}",
+    "bookingFailed": "முன்பதிவு செய்ய முடியவில்லை."
+  },
+  "appointments": {
+    "upcoming": "வரவிருக்கும்",
+    "past": "கடந்த",
+    "cancel": "ரத்து செய்",
+    "cancelConfirm": "இதை ரத்து செய்யவா?",
+    "cancelled": "ரத்து செய்யப்பட்டது",
+    "status": {
+      "pending": "நிலுவையில்",
+      "confirmed": "உறுதி",
+      "completed": "முடிந்தது",
+      "cancelled": "ரத்து",
+      "no_show": "வரவில்லை"
+    }
+  },
+  "lab": {
+    "title": "பரிசோதனைகள்",
+    "cart": "வண்டி",
+    "addToCart": "சேர்",
+    "remove": "அகற்று",
+    "checkout": "ஆர்டர்",
+    "walkIn": "வாக்-இன்",
+    "home": "வீட்டுக்கு வரவழைப்பு",
+    "ordered": "ஆர்டர் இடப்பட்டது",
+    "viewOrder": "ஆர்டரை காண்க",
+    "emptyCart": "ஆர்டர் தொடங்க பரிசோதனைகளை சேர்க்கவும்.",
+    "orderStatus": {
+      "ordered": "ஆர்டர்",
+      "sample_collected": "மாதிரி எடுக்கப்பட்டது",
+      "processing": "செயலாக்கம்",
+      "ready": "தயார்",
+      "delivered": "வழங்கப்பட்டது"
+    }
+  },
+  "reports": {
+    "title": "அறிக்கைகள்",
+    "download": "திற",
+    "empty": "அறிக்கைகள் இல்லை.",
+    "released": "{{date}} அன்று வெளியிடப்பட்டது"
+  },
+  "packages": {
+    "title": "தொகுப்புகள்",
+    "featured": "சிறப்பு",
+    "inclusions": "சேர்க்கப்பட்டுள்ளவை",
+    "validity": "{{days}} நாட்களுக்கு செல்லுபடியாகும்",
+    "purchase": "தொகுப்பை வாங்கு",
+    "purchased": "தொகுப்பு வாங்கப்பட்டது"
+  },
+  "payment": {
+    "title": "கட்டணம்",
+    "openingCheckout": "பாதுகாப்பான பக்கம் திறக்கப்படுகிறது…",
+    "success": "கட்டணம் வெற்றிகரம்",
+    "cancelled": "கட்டணம் ரத்து",
+    "failed": "கட்டணம் தோல்வி",
+    "tryAgain": "மீண்டும் முயற்சி"
+  },
+  "profile": {
+    "title": "சுயவிவரம்",
+    "editProfile": "சுயவிவரத்தை திருத்து",
+    "family": "குடும்ப உறுப்பினர்கள்",
+    "language": "மொழி",
+    "notifications": "அறிவிப்புகள்",
+    "support": "உதவி & ஆதரவு",
+    "about": "MediHub பற்றி",
+    "signOut": "வெளியேறு",
+    "signOutConfirm": "MediHub-இல் இருந்து வெளியேறவா?",
+    "addFamilyMember": "குடும்ப உறுப்பினரை சேர்",
+    "noFamily": "நீங்கள் கவனிக்கும் அனைவரையும் சேர்க்கவும்.",
+    "languageEn": "English",
+    "languageSi": "සිංහල",
+    "languageTa": "தமிழ்",
+    "saved": "சேமிக்கப்பட்டது",
+    "version": "பதிப்பு {{version}}"
+  },
+  "notifications": {
+    "title": "அறிவிப்புகள்",
+    "markAllRead": "அனைத்தையும் படித்ததாக குறி",
+    "empty": "அறிவிப்புகள் இல்லை."
+  },
+  "update": {
+    "forceTitle": "புதுப்பிப்பு தேவை",
+    "forceBody": "தொடர MediHub-ஐ புதுப்பிக்கவும்.",
+    "maintenanceTitle": "விரைவில் திரும்ப வருகிறோம்",
+    "maintenanceBody": "MediHub பராமரிப்பில் உள்ளது."
+  }
+}

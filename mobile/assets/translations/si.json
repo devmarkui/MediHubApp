@@ -1,0 +1,198 @@
+{
+  "common": {
+    "appName": "MediHub",
+    "ok": "හරි",
+    "cancel": "අවලංගු කරන්න",
+    "retry": "නැවත උත්සාහ කරන්න",
+    "save": "සුරකින්න",
+    "next": "ඊළඟ",
+    "back": "ආපසු",
+    "continue": "ඉදිරියට",
+    "loading": "පූරණය වෙමින්…",
+    "empty": "මෙතන තාම කිසිවක් නැත",
+    "yes": "ඔව්",
+    "no": "නැත",
+    "edit": "සංස්කරණය",
+    "delete": "මකා දමන්න",
+    "confirm": "තහවුරු කරන්න",
+    "skip": "මඟ හරින්න",
+    "done": "අවසන්",
+    "search": "සොයන්න",
+    "viewAll": "සියල්ල බලන්න",
+    "close": "වසා දමන්න",
+    "today": "අද",
+    "tomorrow": "හෙට",
+    "verified": "තහවුරුයි"
+  },
+  "errors": {
+    "network": "ජාල සම්බන්ධතාවය නොමැත.",
+    "unknown": "දෝෂයක් සිදුවී ඇත. නැවත උත්සාහ කරන්න.",
+    "required": "අවශ්‍යයි",
+    "invalidPhone": "වලංගු දුරකථන අංකයක් ඇතුළත් කරන්න",
+    "invalidOtp": "ඉලක්කම් 6 ක කේතය ඇතුළත් කරන්න"
+  },
+  "auth": {
+    "onboardingTitle1": "ඔබේ සෞඛ්‍යය ඔබේ අතේම",
+    "onboardingBody1": "සියලුම සංචාර, පරීක්ෂණ සහ පැකේජ එක තැනක.",
+    "onboardingTitle2": "එක ටැප් එකකින් වෙන් කරගන්න",
+    "onboardingBody2": "වෛද්‍යවරයෙක් සහ වේලාවක් තෝරාගන්න.",
+    "onboardingTitle3": "වාර්තා සූදානම් වූ ක්‍ෂණයේම",
+    "onboardingBody3": "ඔබේ දුරකථනයෙන්ම වාර්තා බාගත කරන්න හෝ බෙදාගන්න.",
+    "getStarted": "ආරම්භ කරන්න",
+    "phoneTitle": "ලොගින් වන්න හෝ ලියාපදිංචි වන්න",
+    "phoneSubtitle": "අපි ඔබට ඉලක්කම් 6 ක කේතයක් එවන්නෙමු.",
+    "phoneLabel": "ජංගම දුරකථන අංකය",
+    "phonePrefix": "+94",
+    "sendOtp": "කේතය යවන්න",
+    "otpTitle": "කේතය ඇතුළත් කරන්න",
+    "otpSubtitle": "{{phone}} වෙත යවන ලදී",
+    "otpResendIn": "{{seconds}}තත්පරයෙන් නැවත යවන්න",
+    "otpResend": "කේතය නැවත යවන්න",
+    "verify": "තහවුරු කරන්න",
+    "registerTitle": "ඔබ ගැන කියන්න",
+    "registerSubtitle": "අපි MediHub පුද්ගලීකරණය කරන්නෙමු.",
+    "name": "සම්පූර්ණ නම",
+    "email": "ඊමේල් (අත්‍යවශ්‍ය නැත)",
+    "dob": "උපන් දිනය (අත්‍යවශ්‍ය නැත)",
+    "gender": "ස්ත්‍රී පුරුෂ භාවය",
+    "create": "ගිණුම සාදන්න"
+  },
+  "tabs": {
+    "home": "මුල් පිටුව",
+    "passbook": "මුද්‍රා පොත",
+    "book": "වෙන් කරන්න",
+    "packages": "පැකේජ",
+    "profile": "පැතිකඩ"
+  },
+  "home": {
+    "morning": "සුභ උදෑසනක්",
+    "afternoon": "සුභ දහවලක්",
+    "evening": "සුභ සැන්දෑවක්",
+    "passbookLabel": "සෞඛ්‍ය මුද්‍රා පොත",
+    "member": "සාමාජික",
+    "since": "සිට",
+    "blood": "රුධිර කාණ්ඩය",
+    "reports": "වාර්තා",
+    "packages": "පැකේජ",
+    "quickActions": "ඉක්මන් ක්‍රියා",
+    "actionBook": "වෙන් කරන්න",
+    "actionLabTests": "පරීක්ෂණ",
+    "actionPackages": "පැකේජ",
+    "actionReports": "වාර්තා",
+    "upcoming": "ඉදිරියට",
+    "passbookEntries": "මුද්‍රා පොත් සටහන්",
+    "activeBadge": "ක්‍රියාකාරී"
+  },
+  "passbook": {
+    "title": "මුද්‍රා පොත",
+    "filterAll": "සියල්ල",
+    "filterConsultation": "සංචාර",
+    "filterLab": "පරීක්ෂණ",
+    "filterPackage": "පැකේජ",
+    "empty": "ඔබේ ක්‍රියාකාරකම් මෙතන දිස් වේ."
+  },
+  "book": {
+    "title": "වෙන් කරන්න",
+    "consultantTitle": "වෛද්‍ය සංචාරය",
+    "consultantBody": "වෛද්‍යවරයෙක් සහ වේලාවක් තෝරන්න.",
+    "labTitle": "පරීක්ෂණ",
+    "labBody": "පරීක්ෂණ තෝරා පැමිණෙන්න.",
+    "packageTitle": "සෞඛ්‍ය පැකේජ",
+    "packageBody": "වට්ටම් සහිත ඒකාබද්ධ පරීක්ෂණ."
+  },
+  "doctors": {
+    "title": "වෛද්‍යවරයකු තෝරන්න",
+    "fee": "සංචාර ගාස්තුව",
+    "bookCta": "සංචාරයක් වෙන් කරන්න",
+    "pickDate": "දිනය තෝරන්න",
+    "pickSlot": "කාල පරාසය",
+    "noSlots": "මේ දිනට කාල පරාසයන් නැත.",
+    "confirmTitle": "තහවුරු කරන්න",
+    "confirmBody": "{{date}} දින {{time}} ට {{doctor}}",
+    "bookingFailed": "කාල පරාසය වෙන් කරගත නොහැක."
+  },
+  "appointments": {
+    "upcoming": "ඉදිරියට",
+    "past": "පසුගිය",
+    "cancel": "අවලංගු කරන්න",
+    "cancelConfirm": "මෙය අවලංගු කරන්නද?",
+    "cancelled": "අවලංගුයි",
+    "status": {
+      "pending": "අපේක්ෂිතයි",
+      "confirmed": "තහවුරුයි",
+      "completed": "අවසන්",
+      "cancelled": "අවලංගුයි",
+      "no_show": "පැමිණ නැත"
+    }
+  },
+  "lab": {
+    "title": "පරීක්ෂණ",
+    "cart": "කරත්තය",
+    "addToCart": "එක් කරන්න",
+    "remove": "ඉවත් කරන්න",
+    "checkout": "ඇණවුම ස්ථිර කරන්න",
+    "walkIn": "පැමිණීම",
+    "home": "ගේට් කිට්ටුවට",
+    "ordered": "ඇණවුම සකස් කළා",
+    "viewOrder": "ඇණවුම බලන්න",
+    "emptyCart": "කරත්තයට පරීක්ෂණ එක් කරන්න.",
+    "orderStatus": {
+      "ordered": "ඇණවුම් කළ",
+      "sample_collected": "නියැදිය ගත් ",
+      "processing": "සකස් කරමින්",
+      "ready": "සූදානම්",
+      "delivered": "භාර දුන්"
+    }
+  },
+  "reports": {
+    "title": "වාර්තා",
+    "download": "විවෘත කරන්න",
+    "empty": "වාර්තා නැත.",
+    "released": "{{date}} දින නිකුත් කළ"
+  },
+  "packages": {
+    "title": "පැකේජ",
+    "featured": "විශේෂ",
+    "inclusions": "ඇතුළත් වේ",
+    "validity": "දින {{days}} සඳහා වලංගුයි",
+    "purchase": "පැකේජය මිලදී ගන්න",
+    "purchased": "පැකේජය මිලදී ගන්නා ලදී"
+  },
+  "payment": {
+    "title": "ගෙවීම",
+    "openingCheckout": "ආරක්ෂිත ගෙවීම් පිටුව විවෘත වේ…",
+    "success": "ගෙවීම සාර්ථකයි",
+    "cancelled": "ගෙවීම අවලංගුයි",
+    "failed": "ගෙවීම අසාර්ථකයි",
+    "tryAgain": "නැවත උත්සාහ කරන්න"
+  },
+  "profile": {
+    "title": "පැතිකඩ",
+    "editProfile": "පැතිකඩ සංස්කරණය කරන්න",
+    "family": "පවුලේ සාමාජිකයන්",
+    "language": "භාෂාව",
+    "notifications": "දැනුම්දීම්",
+    "support": "උපකාර සහ සහාය",
+    "about": "MediHub ගැන",
+    "signOut": "ඉවත් වන්න",
+    "signOutConfirm": "ඔබට MediHub වෙතින් ඉවත් වීමට අවශ්‍යද?",
+    "addFamilyMember": "පවුලේ සාමාජිකයෙක් එක් කරන්න",
+    "noFamily": "ඔබ රැක බලා ගන්නා අයව එක් කරන්න.",
+    "languageEn": "English",
+    "languageSi": "සිංහල",
+    "languageTa": "தமிழ்",
+    "saved": "සුරකින ලදී",
+    "version": "අනුවාදය {{version}}"
+  },
+  "notifications": {
+    "title": "දැනුම්දීම්",
+    "markAllRead": "සියල්ල කියවූයේ",
+    "empty": "දැනුම්දීම් නැත."
+  },
+  "update": {
+    "forceTitle": "යාවත්කාලීන කිරීම අවශ්‍යයි",
+    "forceBody": "ඉදිරියට යාමට MediHub යාවත්කාලීන කරන්න.",
+    "maintenanceTitle": "අපි ඉක්මනින් ආපසු එනවා",
+    "maintenanceBody": "MediHub නඩත්තු කිරීමේ පවතී."
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "common": {
+    "appName": "MediHub",
+    "ok": "OK",
+    "cancel": "Cancel",
+    "retry": "Retry",
+    "save": "Save",
+    "next": "Next",
+    "back": "Back",
+    "continue": "Continue",
+    "loading": "Loading…",
+    "empty": "Nothing here yet",
+    "yes": "Yes",
+    "no": "No",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "skip": "Skip",
+    "done": "Done",
+    "search": "Search",
+    "viewAll": "View all",
+    "close": "Close",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "verified": "VERIFIED"
+  },
+  "errors": {
+    "network": "Network unavailable. Check your connection.",
+    "unknown": "Something went wrong. Please try again.",
+    "required": "Required",
+    "invalidPhone": "Enter a valid mobile number",
+    "invalidOtp": "Enter the 6-digit code"
+  },
+  "auth": {
+    "onboardingTitle1": "Your health, in your pocket",
+    "onboardingBody1": "Track every clinic visit, lab test and package in one place.",
+    "onboardingTitle2": "Book in a tap",
+    "onboardingBody2": "Choose a doctor, pick a time, and you’re set.",
+    "onboardingTitle3": "Reports the moment they’re ready",
+    "onboardingBody3": "Download or share lab reports straight from your phone.",
+    "getStarted": "Get started",
+    "phoneTitle": "Sign in or sign up",
+    "phoneSubtitle": "We’ll send a 6-digit code to your phone.",
+    "phoneLabel": "Mobile number",
+    "phonePrefix": "+94",
+    "sendOtp": "Send code",
+    "otpTitle": "Enter the code",
+    "otpSubtitle": "Sent to {{phone}}",
+    "otpResendIn": "Resend in {{seconds}}s",
+    "otpResend": "Resend code",
+    "verify": "Verify",
+    "registerTitle": "Tell us about you",
+    "registerSubtitle": "We’ll personalise MediHub for you.",
+    "name": "Full name",
+    "email": "Email (optional)",
+    "dob": "Date of birth (optional)",
+    "gender": "Gender (optional)",
+    "create": "Create my account"
+  },
+  "tabs": {
+    "home": "Home",
+    "passbook": "Passbook",
+    "book": "Book",
+    "packages": "Packages",
+    "profile": "Profile"
+  },
+  "home": {
+    "morning": "Good morning",
+    "afternoon": "Good afternoon",
+    "evening": "Good evening",
+    "passbookLabel": "HEALTH PASSBOOK",
+    "member": "MEMBER",
+    "since": "SINCE",
+    "blood": "BLOOD",
+    "reports": "REPORTS",
+    "packages": "PACKAGES",
+    "quickActions": "Quick actions",
+    "actionBook": "Book",
+    "actionLabTests": "Lab tests",
+    "actionPackages": "Packages",
+    "actionReports": "Reports",
+    "upcoming": "Upcoming",
+    "passbookEntries": "Passbook entries",
+    "activeBadge": "Active"
+  },
+  "passbook": {
+    "title": "Passbook",
+    "filterAll": "All",
+    "filterConsultation": "Visits",
+    "filterLab": "Lab",
+    "filterPackage": "Packages",
+    "empty": "Your activity will appear here once you book or visit MediHub."
+  },
+  "book": {
+    "title": "Book",
+    "consultantTitle": "Doctor consultation",
+    "consultantBody": "Pick a doctor and time slot.",
+    "labTitle": "Lab tests",
+    "labBody": "Choose tests and walk in or request home collection.",
+    "packageTitle": "Health packages",
+    "packageBody": "Bundled checkups at a discount."
+  },
+  "doctors": {
+    "title": "Choose a doctor",
+    "fee": "Consultation fee",
+    "bookCta": "Book appointment",
+    "pickDate": "Pick a date",
+    "pickSlot": "Pick a slot",
+    "noSlots": "No slots available for this date.",
+    "confirmTitle": "Confirm appointment",
+    "confirmBody": "{{doctor}} on {{date}} at {{time}}",
+    "bookingFailed": "Couldn’t book that slot."
+  },
+  "appointments": {
+    "upcoming": "Upcoming",
+    "past": "Past",
+    "cancel": "Cancel appointment",
+    "cancelConfirm": "Cancel this appointment?",
+    "cancelled": "Cancelled",
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "no_show": "No-show"
+    }
+  },
+  "lab": {
+    "title": "Lab tests",
+    "cart": "Cart",
+    "addToCart": "Add",
+    "remove": "Remove",
+    "checkout": "Checkout",
+    "walkIn": "Walk-in",
+    "home": "Home collection",
+    "ordered": "Order placed",
+    "viewOrder": "View order",
+    "emptyCart": "Add tests to start an order.",
+    "orderStatus": {
+      "ordered": "Ordered",
+      "sample_collected": "Sample collected",
+      "processing": "Processing",
+      "ready": "Ready",
+      "delivered": "Delivered"
+    }
+  },
+  "reports": {
+    "title": "Reports",
+    "download": "Open",
+    "empty": "No reports yet.",
+    "released": "Released {{date}}"
+  },
+  "packages": {
+    "title": "Packages",
+    "featured": "Featured",
+    "inclusions": "What’s included",
+    "validity": "Valid for {{days}} days",
+    "purchase": "Purchase package",
+    "purchased": "Package purchased"
+  },
+  "payment": {
+    "title": "Payment",
+    "openingCheckout": "Opening secure checkout…",
+    "success": "Payment successful",
+    "cancelled": "Payment cancelled",
+    "failed": "Payment failed",
+    "tryAgain": "Try again"
+  },
+  "profile": {
+    "title": "Profile",
+    "editProfile": "Edit profile",
+    "family": "Family members",
+    "language": "Language",
+    "notifications": "Notifications",
+    "support": "Help & support",
+    "about": "About MediHub",
+    "signOut": "Sign out",
+    "signOutConfirm": "Sign out of MediHub?",
+    "addFamilyMember": "Add family member",
+    "noFamily": "Add children, parents, or anyone you manage health for.",
+    "languageEn": "English",
+    "languageSi": "සිංහල",
+    "languageTa": "தமிழ்",
+    "saved": "Saved",
+    "version": "Version {{version}}"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "empty": "No notifications yet."
+  },
+  "update": {
+    "forceTitle": "Update required",
+    "forceBody": "Please update MediHub to continue.",
+    "maintenanceTitle": "We’ll be back soon",
+    "maintenanceBody": "MediHub is undergoing scheduled maintenance."
+  }
+}
