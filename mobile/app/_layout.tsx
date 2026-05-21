@@ -15,6 +15,7 @@ import '@/utils/i18n';
 import { useAuthStore } from '@/stores/authStore';
 import { useUIStore } from '@/stores/uiStore';
 import { colors } from '@/theme';
+import { setLanguage } from '@/utils/i18n';
 
 void SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -51,10 +52,15 @@ export default function RootLayout(): React.ReactElement | null {
 
   const hydrated = useAuthStore((s) => s.hydrated);
   const hydrate = useAuthStore((s) => s.hydrate);
+  const patient = useAuthStore((s) => s.patient);
 
   useEffect(() => {
     void hydrate();
   }, [hydrate]);
+
+  useEffect(() => {
+    if (patient?.language) setLanguage(patient.language);
+  }, [patient?.language]);
 
   const ready = fontsLoaded && hydrated;
 
