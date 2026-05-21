@@ -1,0 +1,58 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node / Expo
+node_modules/
+.expo/
+.expo-shared/
+dist/
+web-build/
+*.log
+
+# Env
+.env
+.env.local
+mobile/.env
+backend/.env
+
+# Builds
+ios/
+android/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# PHP / Laravel
+/backend/vendor/
+/backend/node_modules/
+/backend/public/build
+/backend/public/hot
+/backend/storage/*.key
+/backend/storage/logs/*.log
+/backend/storage/framework/cache/*
+/backend/storage/framework/sessions/*
+/backend/storage/framework/testing/*
+/backend/storage/framework/views/*
+/backend/storage/app/public/*
+!/backend/storage/app/public/.gitkeep
+/backend/bootstrap/cache/*.php
+!/backend/bootstrap/cache/.gitkeep
+/backend/.phpunit.cache
+/backend/.phpunit.result.cache
+
+# SQLite local DB
+/backend/database/database.sqlite
+
+# Misc
+*.tsbuildinfo
+.eas/
+coverage/
