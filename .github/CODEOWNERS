@@ -1,0 +1,27 @@
+# CODEOWNERS
+#
+# GitHub will auto-request review from the listed user/team whenever a PR
+# touches one of these paths. Replace @profile-packages-contributor with your
+# friend's GitHub handle once it's known. Until then this file is informational.
+#
+# Repo-wide owner (lead reviewer)
+*                                                       @devmarkui
+
+# Profile feature
+/mobile/app/(tabs)/profile.tsx                          @profile-packages-contributor @devmarkui
+/mobile/app/profile/                                    @profile-packages-contributor @devmarkui
+/mobile/src/api/patients.ts                             @profile-packages-contributor @devmarkui
+/backend/app/Http/Controllers/Api/V1/PatientController.php   @profile-packages-contributor @devmarkui
+/backend/app/Http/Controllers/Api/V1/FamilyController.php    @profile-packages-contributor @devmarkui
+/backend/app/Http/Resources/PatientResource.php              @profile-packages-contributor @devmarkui
+
+# Packages feature
+/mobile/app/(tabs)/packages.tsx                         @profile-packages-contributor @devmarkui
+/mobile/app/packages/                                   @profile-packages-contributor @devmarkui
+/mobile/src/api/packages.ts                             @profile-packages-contributor @devmarkui
+/backend/app/Http/Controllers/Api/V1/PackageController.php          @profile-packages-contributor @devmarkui
+/backend/app/Http/Controllers/Api/V1/PackagePurchaseController.php  @profile-packages-contributor @devmarkui
+/backend/app/Http/Resources/PackageResource.php                     @profile-packages-contributor @devmarkui
+/backend/app/Http/Resources/PackagePurchaseResource.php             @profile-packages-contributor @devmarkui
+/backend/app/Models/Package.php                                     @profile-packages-contributor @devmarkui
+/backend/app/Models/PackagePurchase.php                             @profile-packages-contributor @devmarkui
