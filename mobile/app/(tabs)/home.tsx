@@ -28,6 +28,12 @@ function greetingKey(): 'home.morning' | 'home.afternoon' | 'home.evening' {
   return 'home.evening';
 }
 
+// Local fallback for the open/closed pill when app config can't be fetched.
+function isClinicOpenNow(): boolean {
+  const hour = Number(formatInTimeZone(new Date(), 'Asia/Colombo', 'H'));
+  return hour >= 8 && hour < 21;
+}
+
 export default function HomeScreen(): React.ReactElement {
   const { t } = useTranslation();
   const router = useRouter();
@@ -92,7 +98,7 @@ export default function HomeScreen(): React.ReactElement {
           </View>
         </View>
 
-        {/* Stage 4 — opening hours banner */}
+        {/* Stage 4 — opening hours banner. Skeleton only while loading; never stuck. */}
         {hours ? (
           <OpeningHoursBanner
             title={t('home.openHoursTitle')}
@@ -101,10 +107,19 @@ export default function HomeScreen(): React.ReactElement {
             openLabel={t('home.openNow')}
             closedLabel={t('home.closedNow')}
           />
-        ) : (
+        ) : config.isLoading ? (
           <View style={{ marginHorizontal: spacing.screen, marginBottom: spacing.lg }}>
             <Skeleton height={72} radius={18} />
           </View>
+        ) : (
+          // Config failed (e.g. offline) — fall back to a static banner so it never hangs.
+          <OpeningHoursBanner
+            title={t('home.openHoursTitle')}
+            hours="8:00 AM – 9:00 PM · Open every day"
+            isOpen={isClinicOpenNow()}
+            openLabel={t('home.openNow')}
+            closedLabel={t('home.closedNow')}
+          />
         )}
 
         {/* Health passbook identity card */}

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Admin\AppointmentController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Admin\ReportController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::post('patients/{patient}/reports', [ReportController::class, 'store'])->name('reports.store');
         Route::delete('patients/{patient}/reports/{report}', [ReportController::class, 'destroy'])->name('reports.destroy');
+
+        Route::get('doctors', [DoctorController::class, 'index'])->name('doctors.index');
+        Route::get('doctors/create', [DoctorController::class, 'create'])->name('doctors.create');
+        Route::post('doctors', [DoctorController::class, 'store'])->name('doctors.store');
+        Route::get('doctors/{doctor}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
+        Route::put('doctors/{doctor}', [DoctorController::class, 'update'])->name('doctors.update');
+        Route::delete('doctors/{doctor}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
 
         Route::get('appointments', [AppointmentController::class, 'index'])->name('appointments.index');
         Route::put('appointments/{appointment}', [AppointmentController::class, 'update'])->name('appointments.update');

@@ -16,64 +16,131 @@
 </div>
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    {{-- Details + BMI --}}
+    {{-- Details + BMI + medical profile --}}
     <div class="bg-white rounded-2xl border border-slate-200 p-6">
-        <h2 class="font-medium text-slate-900 mb-4">Patient details</h2>
-        <form method="POST" action="{{ route('admin.patients.update', $patient) }}" class="space-y-4">
+        <form method="POST" action="{{ route('admin.patients.update', $patient) }}" class="space-y-6">
             @csrf
             @method('PUT')
-            <div class="grid grid-cols-2 gap-4">
-                <div class="col-span-2">
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Full name *</label>
-                    <input name="name" value="{{ old('name', $patient->name) }}" required class="w-full rounded-lg border border-slate-300 px-3 py-2">
-                </div>
-                <div class="col-span-2">
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                    <input name="email" type="email" value="{{ old('email', $patient->email) }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Date of birth</label>
-                    <input name="dob" type="date" value="{{ old('dob', optional($patient->dob)->format('Y-m-d')) }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Gender</label>
-                    <select name="gender" class="w-full rounded-lg border border-slate-300 px-3 py-2">
-                        <option value="">—</option>
-                        @foreach(['male','female','other'] as $g)
-                            <option value="{{ $g }}" @selected(old('gender', $patient->gender)===$g)>{{ ucfirst($g) }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Blood group</label>
-                    <select name="blood_group" class="w-full rounded-lg border border-slate-300 px-3 py-2">
-                        <option value="">—</option>
-                        @foreach(['A+','A-','B+','B-','AB+','AB-','O+','O-'] as $bg)
-                            <option value="{{ $bg }}" @selected(old('blood_group', $patient->blood_group)===$bg)>{{ $bg }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div></div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Height (cm)</label>
-                    <input name="height_cm" type="number" step="0.1" value="{{ old('height_cm', $patient->height_cm) }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Weight (kg)</label>
-                    <input name="weight_kg" type="number" step="0.1" value="{{ old('weight_kg', $patient->weight_kg) }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Reset password</label>
-                    <input name="password" type="text" placeholder="leave blank to keep" class="w-full rounded-lg border border-slate-300 px-3 py-2">
-                </div>
-                <div class="flex items-end">
-                    <label class="inline-flex items-center gap-2 text-sm text-slate-700">
-                        <input type="hidden" name="is_active" value="0">
-                        <input type="checkbox" name="is_active" value="1" @checked($patient->is_active) class="rounded border-slate-300">
-                        Account active
-                    </label>
+
+            {{-- Core identity --}}
+            <div>
+                <h2 class="font-medium text-slate-900 mb-3">Core identity</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-2">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Full name (as on NIC) *</label>
+                        <input name="name" value="{{ old('name', $patient->name) }}" required class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">NIC / Passport</label>
+                        <input name="nic" value="{{ old('nic', $patient->nic) }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Date of birth</label>
+                        <input name="dob" type="date" value="{{ old('dob', optional($patient->dob)->format('Y-m-d')) }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Gender</label>
+                        <select name="gender" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                            <option value="">—</option>
+                            @foreach(['male','female','other'] as $g)
+                                <option value="{{ $g }}" @selected(old('gender', $patient->gender)===$g)>{{ ucfirst($g) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
+
+            {{-- Contact --}}
+            <div>
+                <h2 class="font-medium text-slate-900 mb-3">Contact details</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                        <input name="email" type="email" value="{{ old('email', $patient->email) }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">District</label>
+                        <input name="district" value="{{ old('district', $patient->district) }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Residential address</label>
+                        <input name="address" value="{{ old('address', $patient->address) }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Postal code</label>
+                        <input name="postal_code" value="{{ old('postal_code', $patient->postal_code) }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                    </div>
+                </div>
+            </div>
+
+            {{-- Medical profile --}}
+            <div>
+                <h2 class="font-medium text-slate-900 mb-3">Medical profile</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Blood group</label>
+                        <select name="blood_group" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                            <option value="">—</option>
+                            @foreach(['A+','A-','B+','B-','AB+','AB-','O+','O-'] as $bg)
+                                <option value="{{ $bg }}" @selected(old('blood_group', $patient->blood_group)===$bg)>{{ $bg }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Height (cm)</label>
+                            <input name="height_cm" type="number" step="0.1" value="{{ old('height_cm', $patient->height_cm) }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Weight (kg)</label>
+                            <input name="weight_kg" type="number" step="0.1" value="{{ old('weight_kg', $patient->weight_kg) }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                        </div>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Known allergies (drug / food)</label>
+                        <textarea name="allergies" rows="2" class="w-full rounded-lg border border-slate-300 px-3 py-2">{{ old('allergies', $patient->allergies) }}</textarea>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Chronic conditions (diabetes, hypertension, asthma…)</label>
+                        <textarea name="chronic_conditions" rows="2" class="w-full rounded-lg border border-slate-300 px-3 py-2">{{ old('chronic_conditions', $patient->chronic_conditions) }}</textarea>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Current medications</label>
+                        <textarea name="current_medications" rows="2" class="w-full rounded-lg border border-slate-300 px-3 py-2">{{ old('current_medications', $patient->current_medications) }}</textarea>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Past surgeries / major history</label>
+                        <textarea name="past_surgeries" rows="2" class="w-full rounded-lg border border-slate-300 px-3 py-2">{{ old('past_surgeries', $patient->past_surgeries) }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Emergency + account --}}
+            <div>
+                <h2 class="font-medium text-slate-900 mb-3">Emergency contact & account</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Emergency contact name</label>
+                        <input name="emergency_contact_name" value="{{ old('emergency_contact_name', $patient->emergency_contact_name) }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Emergency contact phone</label>
+                        <input name="emergency_contact_phone" value="{{ old('emergency_contact_phone', $patient->emergency_contact_phone) }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Reset password</label>
+                        <input name="password" type="text" placeholder="leave blank to keep" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+                    </div>
+                    <div class="flex items-end">
+                        <label class="inline-flex items-center gap-2 text-sm text-slate-700">
+                            <input type="hidden" name="is_active" value="0">
+                            <input type="checkbox" name="is_active" value="1" @checked($patient->is_active) class="rounded border-slate-300">
+                            Account active
+                        </label>
+                    </div>
+                </div>
+            </div>
+
             <button class="rounded-lg bg-teal-700 hover:bg-teal-600 text-white font-medium px-6 py-2.5">Save details</button>
         </form>
     </div>

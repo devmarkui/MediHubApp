@@ -25,6 +25,7 @@
         <nav class="flex items-center gap-1 text-sm">
             <a href="{{ route('admin.dashboard') }}" class="px-3 py-1.5 rounded hover:bg-white/10 {{ request()->routeIs('admin.dashboard') ? 'bg-white/15' : '' }}">Dashboard</a>
             <a href="{{ route('admin.patients.index') }}" class="px-3 py-1.5 rounded hover:bg-white/10 {{ request()->routeIs('admin.patients.*') ? 'bg-white/15' : '' }}">Patients</a>
+            <a href="{{ route('admin.doctors.index') }}" class="px-3 py-1.5 rounded hover:bg-white/10 {{ request()->routeIs('admin.doctors.*') ? 'bg-white/15' : '' }}">Doctors</a>
             <a href="{{ route('admin.appointments.index') }}" class="px-3 py-1.5 rounded hover:bg-white/10 {{ request()->routeIs('admin.appointments.*') ? 'bg-white/15' : '' }}">Appointments</a>
             <form method="POST" action="{{ route('admin.logout') }}" class="ml-2">
                 @csrf

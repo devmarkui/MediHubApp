@@ -21,6 +21,12 @@ export default function HealthDetailsScreen(): React.ReactElement {
 
   const [height, setHeight] = useState(patient?.height_cm ? String(patient.height_cm) : '');
   const [weight, setWeight] = useState(patient?.weight_kg ? String(patient.weight_kg) : '');
+  const [allergies, setAllergies] = useState(patient?.allergies ?? '');
+  const [chronic, setChronic] = useState(patient?.chronic_conditions ?? '');
+  const [medications, setMedications] = useState(patient?.current_medications ?? '');
+  const [surgeries, setSurgeries] = useState(patient?.past_surgeries ?? '');
+  const [ecName, setEcName] = useState(patient?.emergency_contact_name ?? '');
+  const [ecPhone, setEcPhone] = useState(patient?.emergency_contact_phone ?? '');
 
   const preview = useMemo(() => {
     const h = parseFloat(height);
@@ -37,6 +43,12 @@ export default function HealthDetailsScreen(): React.ReactElement {
       patientsApi.update({
         height_cm: height ? Number(height) : null,
         weight_kg: weight ? Number(weight) : null,
+        allergies: allergies.trim() || null,
+        chronic_conditions: chronic.trim() || null,
+        current_medications: medications.trim() || null,
+        past_surgeries: surgeries.trim() || null,
+        emergency_contact_name: ecName.trim() || null,
+        emergency_contact_phone: ecPhone.trim() || null,
       }),
     onSuccess: async (next) => {
       await updatePatient(next);
@@ -53,7 +65,7 @@ export default function HealthDetailsScreen(): React.ReactElement {
     <SafeAreaView style={styles.safe} edges={['top']}>
       <Stack.Screen options={{ headerShown: true, title: t('profile.health') }} />
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <ScrollView contentContainerStyle={{ padding: spacing.screen }} keyboardShouldPersistTaps="handled">
+        <ScrollView contentContainerStyle={{ padding: spacing.screen, gap: spacing.md }} keyboardShouldPersistTaps="handled">
           <Text style={styles.subtitle}>{t('health.subtitle')}</Text>
 
           <View style={styles.bmiCard}>
@@ -64,26 +76,24 @@ export default function HealthDetailsScreen(): React.ReactElement {
 
           <View style={styles.fieldRow}>
             <View style={{ flex: 1 }}>
-              <Input
-                label={t('health.heightLabel')}
-                placeholder="170"
-                keyboardType="decimal-pad"
-                value={height}
-                onChangeText={(v) => setHeight(v.replace(/[^\d.]/g, ''))}
-              />
+              <Input label={t('health.heightLabel')} placeholder="170" keyboardType="decimal-pad" value={height} onChangeText={(v) => setHeight(v.replace(/[^\d.]/g, ''))} />
             </View>
             <View style={{ flex: 1 }}>
-              <Input
-                label={t('health.weightLabel')}
-                placeholder="65"
-                keyboardType="decimal-pad"
-                value={weight}
-                onChangeText={(v) => setWeight(v.replace(/[^\d.]/g, ''))}
-              />
+              <Input label={t('health.weightLabel')} placeholder="65" keyboardType="decimal-pad" value={weight} onChangeText={(v) => setWeight(v.replace(/[^\d.]/g, ''))} />
             </View>
           </View>
 
-          <View style={{ height: spacing.xl }} />
+          <Text style={styles.group}>{t('health.medicalGroup')}</Text>
+          <Input label={t('health.allergies')} placeholder={t('health.allergiesHint')} value={allergies} onChangeText={setAllergies} multiline style={styles.multiline} />
+          <Input label={t('health.chronic')} placeholder={t('health.chronicHint')} value={chronic} onChangeText={setChronic} multiline style={styles.multiline} />
+          <Input label={t('health.medications')} value={medications} onChangeText={setMedications} multiline style={styles.multiline} />
+          <Input label={t('health.surgeries')} value={surgeries} onChangeText={setSurgeries} multiline style={styles.multiline} />
+
+          <Text style={styles.group}>{t('health.emergencyGroup')}</Text>
+          <Input label={t('health.ecName')} value={ecName} onChangeText={setEcName} autoCapitalize="words" />
+          <Input label={t('health.ecPhone')} value={ecPhone} onChangeText={setEcPhone} keyboardType="phone-pad" />
+
+          <View style={{ height: spacing.sm }} />
           <Button label={t('health.save')} onPress={() => save.mutate()} loading={save.isPending} />
         </ScrollView>
       </KeyboardAvoidingView>
@@ -95,8 +105,6 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.surfaceTint },
   subtitle: { fontFamily: fontFamily.regular, fontSize: 14, color: colors.textSecondary },
   bmiCard: {
-    marginTop: spacing.lg,
-    marginBottom: spacing.lg,
     alignItems: 'center',
     paddingVertical: spacing.lg,
     borderRadius: radius.card,
@@ -108,4 +116,6 @@ const styles = StyleSheet.create({
   bmiValue: { marginTop: 4, fontFamily: fontFamily.medium, fontSize: 34, color: colors.textPrimary },
   bmiCat: { marginTop: 2, fontFamily: fontFamily.medium, fontSize: 13 },
   fieldRow: { flexDirection: 'row', gap: spacing.sm },
+  group: { fontFamily: fontFamily.medium, fontSize: 13, color: colors.textPrimary, marginTop: spacing.sm },
+  multiline: { minHeight: 64, paddingTop: 12, textAlignVertical: 'top' },
 });

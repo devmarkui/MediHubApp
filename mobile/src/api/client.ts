@@ -14,7 +14,9 @@ export function configureAuth(provider: () => string | null, onLogout: () => voi
 
 export const http: AxiosInstance = axios.create({
   baseURL: env.apiUrl,
-  timeout: 15000,
+  // Shorter timeout so a flaky network surfaces a retry UI quickly instead of
+  // leaving screens on a spinner.
+  timeout: 12000,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

@@ -11,7 +11,24 @@ export const patientsApi = {
     payload: Partial<
       Pick<
         Patient,
-        'name' | 'email' | 'dob' | 'gender' | 'blood_group' | 'height_cm' | 'weight_kg' | 'language'
+        | 'name'
+        | 'nic'
+        | 'email'
+        | 'address'
+        | 'district'
+        | 'postal_code'
+        | 'dob'
+        | 'gender'
+        | 'blood_group'
+        | 'height_cm'
+        | 'weight_kg'
+        | 'allergies'
+        | 'chronic_conditions'
+        | 'current_medications'
+        | 'past_surgeries'
+        | 'emergency_contact_name'
+        | 'emergency_contact_phone'
+        | 'language'
       >
     >,
   ) {

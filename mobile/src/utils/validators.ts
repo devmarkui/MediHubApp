@@ -50,10 +50,19 @@ export const healthSchema = z.object({
   weight_kg: weightField,
 });
 
+const dobField = z
+  .string()
+  .optional()
+  .refine((v) => !v || /^\d{4}-\d{2}-\d{2}$/.test(v), 'Use the format YYYY-MM-DD');
+
 export const profileSchema = z.object({
   name: z.string().min(2).max(120),
+  nic: z.string().max(20).or(z.literal('')).optional(),
   email: z.string().email().or(z.literal('')).optional(),
-  dob: z.string().optional(),
+  address: z.string().max(255).or(z.literal('')).optional(),
+  district: z.string().max(60).or(z.literal('')).optional(),
+  postal_code: z.string().max(10).or(z.literal('')).optional(),
+  dob: dobField,
   gender: z.enum(['male', 'female', 'other']).optional(),
   blood_group: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']).optional(),
   height_cm: heightField,

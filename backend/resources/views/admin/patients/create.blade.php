@@ -10,12 +10,28 @@
     @csrf
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Full name *</label>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Full name (as on NIC) *</label>
             <input name="name" value="{{ old('name') }}" required class="w-full rounded-lg border border-slate-300 px-3 py-2">
         </div>
         <div>
             <label class="block text-sm font-medium text-slate-700 mb-1">Mobile (+9477XXXXXXX) *</label>
             <input name="phone" value="{{ old('phone') }}" placeholder="+94771234567" required class="w-full rounded-lg border border-slate-300 px-3 py-2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">NIC / Passport</label>
+            <input name="nic" value="{{ old('nic') }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">District</label>
+            <input name="district" value="{{ old('district') }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Residential address</label>
+            <input name="address" value="{{ old('address') }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Postal code</label>
+            <input name="postal_code" value="{{ old('postal_code') }}" class="w-full rounded-lg border border-slate-300 px-3 py-2">
         </div>
         <div>
             <label class="block text-sm font-medium text-slate-700 mb-1">Temporary password</label>
