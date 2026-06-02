@@ -26,6 +26,7 @@ class ReportResource extends JsonResource
             'title' => $r->title,
             'file_size_kb' => $r->file_size_kb,
             'released_at' => $r->released_at?->toIso8601String(),
+            'source' => 'medihub',
         ];
     }
 }

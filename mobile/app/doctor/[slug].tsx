@@ -3,9 +3,10 @@ import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { addDays, format } from 'date-fns';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { appApi } from '@/api/app';
 import { appointmentsApi } from '@/api/appointments';
 import { doctorsApi } from '@/api/doctors';
 import { Avatar } from '@/components/ui/Avatar';
@@ -13,21 +14,39 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ErrorState } from '@/components/ui/ErrorState';
 import { Skeleton } from '@/components/ui/Skeleton';
+import { useAuthStore } from '@/stores/authStore';
 import { colors, fontFamily, radius, spacing } from '@/theme';
 import { ApiError } from '@/types/api';
 import { formatMoney, formatTime } from '@/utils/format';
+
+// Stage 5 — fallback WhatsApp number if app config hasn't loaded yet.
+const FALLBACK_WHATSAPP = '+94752977591';
+
+function openWhatsApp(numberE164: string, message: string): void {
+  const digits = numberE164.replace(/\D/g, '');
+  const appUrl = `whatsapp://send?phone=${digits}&text=${encodeURIComponent(message)}`;
+  const webUrl = `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
+  void Linking.canOpenURL(appUrl).then((supported) =>
+    Linking.openURL(supported ? appUrl : webUrl).catch(() => {
+      void Linking.openURL(webUrl);
+    }),
+  );
+}
 
 export default function DoctorDetail(): React.ReactElement {
   const { t } = useTranslation();
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const router = useRouter();
   const queryClient = useQueryClient();
+  const patient = useAuthStore((s) => s.patient);
 
   const doctor = useQuery({
     queryKey: ['doctor', slug],
     queryFn: () => doctorsApi.show(String(slug)),
     enabled: typeof slug === 'string',
   });
+
+  const config = useQuery({ queryKey: ['app.config'], queryFn: appApi.config });
 
   const dates = useMemo(() => {
     const today = new Date();
@@ -53,6 +72,21 @@ export default function DoctorDetail(): React.ReactElement {
     onSuccess: (created) => {
       void queryClient.invalidateQueries({ queryKey: ['appointments'] });
       void queryClient.invalidateQueries({ queryKey: ['passbook'] });
+
+      // Stage 5 — the request is now saved (admin sees it). Also notify MediHub
+      // on WhatsApp with the details for confirmation.
+      const number = config.data?.appointment_whatsapp ?? FALLBACK_WHATSAPP;
+      const d = doctor.data;
+      const message =
+        `*New appointment request — MediHub*\n` +
+        `Patient: ${patient?.name ?? '—'} (${patient?.phone ?? '—'})\n` +
+        `Passbook: ${patient?.passbook_no ?? '—'}\n` +
+        `Doctor: ${d?.name ?? '—'} (${d?.specialization ?? '—'})\n` +
+        `Date: ${selectedDate}\n` +
+        `Time: ${formatTime(selectedTime)}\n` +
+        `Ref: ${created.appointment_no}`;
+      openWhatsApp(number, message);
+
       router.replace({ pathname: '/appointments/[id]', params: { id: String(created.id) } });
     },
     onError: (e: unknown) => {
@@ -160,6 +194,7 @@ export default function DoctorDetail(): React.ReactElement {
       </ScrollView>
 
       <View style={styles.cta}>
+        <Text style={styles.whatsappNote}>{t('doctors.whatsappNote')}</Text>
         <Button
           label={t('doctors.bookCta')}
           disabled={!selectedTime}
@@ -215,4 +250,5 @@ const styles = StyleSheet.create({
   slotTextDisabled: { color: colors.textTertiary },
   empty: { fontFamily: fontFamily.regular, fontSize: 13, color: colors.textTertiary, marginTop: spacing.xs },
   cta: { padding: spacing.screen, backgroundColor: colors.surface, borderTopColor: colors.border, borderTopWidth: StyleSheet.hairlineWidth },
+  whatsappNote: { fontFamily: fontFamily.regular, fontSize: 11, color: colors.textTertiary, marginBottom: spacing.sm, textAlign: 'center' },
 });

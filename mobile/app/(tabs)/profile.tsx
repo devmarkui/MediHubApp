@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import {
+  Activity,
   Bell,
   ChevronRight,
   Globe,
@@ -20,7 +21,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { colors, fontFamily, radius, spacing } from '@/theme';
 import { passbookDisplay } from '@/utils/format';
 
-type ItemKey = 'edit' | 'family' | 'language' | 'notifications' | 'support' | 'about' | 'signOut';
+type ItemKey = 'edit' | 'health' | 'family' | 'language' | 'notifications' | 'support' | 'about' | 'signOut';
 
 export default function ProfileScreen(): React.ReactElement {
   const { t } = useTranslation();
@@ -32,12 +33,13 @@ export default function ProfileScreen(): React.ReactElement {
     mutationFn: () => authApi.logout(),
     onSettled: async () => {
       await signOut();
-      router.replace('/(auth)/phone');
+      router.replace('/(auth)/login');
     },
   });
 
   const items: Array<{ key: ItemKey; icon: React.ReactNode; label: string; onPress: () => void; danger?: boolean }> = [
     { key: 'edit', icon: <UserCircle size={20} color={colors.darkTeal} />, label: t('profile.editProfile'), onPress: () => router.push('/profile/edit') },
+    { key: 'health', icon: <Activity size={20} color={colors.darkTeal} />, label: t('profile.health'), onPress: () => router.push('/profile/health') },
     { key: 'family', icon: <Users size={20} color={colors.darkTeal} />, label: t('profile.family'), onPress: () => router.push('/profile/family') },
     { key: 'language', icon: <Globe size={20} color={colors.darkTeal} />, label: t('profile.language'), onPress: () => router.push('/profile/language') },
     { key: 'notifications', icon: <Bell size={20} color={colors.darkTeal} />, label: t('profile.notifications'), onPress: () => router.push('/notifications' as never) },

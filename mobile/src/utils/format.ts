@@ -51,3 +51,19 @@ export function passbookDisplay(passbookNo: string | null | undefined): string {
   if (!passbookNo) return 'MH · 0000 · 00000';
   return passbookNo.replace(/-/g, ' · ');
 }
+
+export type BmiCategory = { label: string; color: string };
+
+/**
+ * WHO BMI bands. `palette` is passed in to avoid a theme import cycle.
+ */
+export function bmiCategory(
+  bmi: number | null | undefined,
+  palette: { info: string; emerald: string; warning: string; danger: string },
+): BmiCategory | null {
+  if (bmi === null || bmi === undefined || Number.isNaN(bmi)) return null;
+  if (bmi < 18.5) return { label: 'Underweight', color: palette.info };
+  if (bmi < 25) return { label: 'Healthy', color: palette.emerald };
+  if (bmi < 30) return { label: 'Overweight', color: palette.warning };
+  return { label: 'Obese', color: palette.danger };
+}

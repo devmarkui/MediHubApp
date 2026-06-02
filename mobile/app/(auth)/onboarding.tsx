@@ -41,7 +41,7 @@ export default function Onboarding(): React.ReactElement {
   const handleNext = (): void => {
     if (isLast) {
       completeOnboarding();
-      router.replace('/(auth)/phone');
+      router.replace('/(auth)/login');
       return;
     }
     setIndex(index + 1);
@@ -49,7 +49,7 @@ export default function Onboarding(): React.ReactElement {
 
   const handleSkip = (): void => {
     completeOnboarding();
-    router.replace('/(auth)/phone');
+    router.replace('/(auth)/login');
   };
 
   return (

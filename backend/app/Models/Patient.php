@@ -19,10 +19,13 @@ class Patient extends Authenticatable
         'passbook_no',
         'phone',
         'name',
+        'password',
         'email',
         'dob',
         'gender',
         'blood_group',
+        'height_cm',
+        'weight_kg',
         'language',
         'avatar_path',
         'parent_patient_id',
@@ -32,6 +35,7 @@ class Patient extends Authenticatable
     ];
 
     protected $hidden = [
+        'password',
         'remember_token',
     ];
 
@@ -41,7 +45,27 @@ class Patient extends Authenticatable
             'dob' => 'date',
             'member_since' => 'date',
             'is_active' => 'boolean',
+            'password' => 'hashed',
+            'height_cm' => 'decimal:1',
+            'weight_kg' => 'decimal:1',
         ];
+    }
+
+    /**
+     * Body Mass Index, derived from height + weight. Null until both are known.
+     */
+    public function bmi(): ?float
+    {
+        $height = (float) $this->height_cm;
+        $weight = (float) $this->weight_kg;
+
+        if ($height <= 0 || $weight <= 0) {
+            return null;
+        }
+
+        $metres = $height / 100;
+
+        return round($weight / ($metres * $metres), 1);
     }
 
     public function parent(): BelongsTo

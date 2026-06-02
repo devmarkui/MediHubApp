@@ -1,32 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
-import {
-  Bell,
-  CalendarPlus,
-  FileText,
-  FlaskConical,
-  Package,
-} from 'lucide-react-native';
+import { Bell, CalendarCheck, FileText, Stethoscope } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
-import {
-  Pressable,
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { formatInTimeZone } from 'date-fns-tz';
 
 import { appApi } from '@/api/app';
 import { appointmentsApi } from '@/api/appointments';
 import { notificationsApi } from '@/api/notifications';
-import { packagesApi } from '@/api/packages';
-import { passbookApi } from '@/api/passbook';
 import { reportsApi } from '@/api/reports';
-import { ActivityRow } from '@/components/home/ActivityRow';
-import { LaunchBanner } from '@/components/home/LaunchBanner';
+import { OpeningHoursBanner } from '@/components/home/OpeningHoursBanner';
 import { QuickAction } from '@/components/home/QuickAction';
 import { StatTile } from '@/components/home/StatTile';
 import { UpcomingCard } from '@/components/home/UpcomingCard';
@@ -35,7 +19,7 @@ import { Avatar } from '@/components/ui/Avatar';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useAuthStore } from '@/stores/authStore';
 import { colors, fontFamily, radius, spacing } from '@/theme';
-import { initials } from '@/utils/format';
+import { bmiCategory, initials } from '@/utils/format';
 
 function greetingKey(): 'home.morning' | 'home.afternoon' | 'home.evening' {
   const hour = Number(formatInTimeZone(new Date(), 'Asia/Colombo', 'H'));
@@ -50,39 +34,29 @@ export default function HomeScreen(): React.ReactElement {
   const patient = useAuthStore((s) => s.patient);
 
   const config = useQuery({ queryKey: ['app.config'], queryFn: appApi.config });
-  const passbook = useQuery({
-    queryKey: ['passbook', 'home'],
-    queryFn: () => passbookApi.feed({ per_page: 5 }),
-  });
   const upcoming = useQuery({
     queryKey: ['appointments', 'upcoming'],
     queryFn: () => appointmentsApi.list('upcoming'),
   });
   const reports = useQuery({ queryKey: ['reports'], queryFn: () => reportsApi.list() });
-  const purchases = useQuery({
-    queryKey: ['package-purchases'],
-    queryFn: () => packagesApi.myPurchases(),
-  });
   const unread = useQuery({
     queryKey: ['notifications', 'unread'],
     queryFn: () => notificationsApi.list({ unread: true }),
   });
 
-  const isLoading = passbook.isLoading || upcoming.isLoading;
-  const refreshing = passbook.isFetching && !passbook.isLoading;
-
+  const refreshing = config.isFetching && !config.isLoading;
   const onRefresh = (): void => {
     void config.refetch();
-    void passbook.refetch();
     void upcoming.refetch();
     void reports.refetch();
-    void purchases.refetch();
     void unread.refetch();
   };
 
   const reportsCount = reports.data?.length ?? 0;
-  const activePackages = (purchases.data ?? []).filter((p) => p.status === 'active').length;
   const unreadCount = unread.data?.length ?? 0;
+  const bmi = patient?.bmi ?? null;
+  const bmiCat = bmiCategory(bmi, colors);
+  const hours = config.data?.opening_hours;
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
@@ -90,7 +64,7 @@ export default function HomeScreen(): React.ReactElement {
         contentContainerStyle={{ paddingBottom: spacing.xl }}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.darkTeal} />}
       >
-        {/* 1. Greeting header */}
+        {/* Greeting */}
         <View style={styles.header}>
           <View style={{ flex: 1 }}>
             <Text style={styles.greeting}>{t(greetingKey())}</Text>
@@ -118,7 +92,22 @@ export default function HomeScreen(): React.ReactElement {
           </View>
         </View>
 
-        {/* 2. Hero passbook card */}
+        {/* Stage 4 — opening hours banner */}
+        {hours ? (
+          <OpeningHoursBanner
+            title={t('home.openHoursTitle')}
+            hours={`${hours.open_label} – ${hours.close_label} · ${hours.days_label}`}
+            isOpen={hours.is_open_now}
+            openLabel={t('home.openNow')}
+            closedLabel={t('home.closedNow')}
+          />
+        ) : (
+          <View style={{ marginHorizontal: spacing.screen, marginBottom: spacing.lg }}>
+            <Skeleton height={72} radius={18} />
+          </View>
+        )}
+
+        {/* Health passbook identity card */}
         <PassbookCard
           passbookNo={patient?.passbook_no ?? null}
           memberName={patient?.name ?? '—'}
@@ -129,57 +118,45 @@ export default function HomeScreen(): React.ReactElement {
           sinceLabel={t('home.since')}
         />
 
-        {/* 3. Stats trio */}
+        {/* Stage 2 — stats incl. BMI */}
         <View style={styles.stats}>
           <StatTile label={t('home.blood')} value={patient?.blood_group ?? '—'} valueColor={colors.danger} />
           <StatTile label={t('home.reports')} value={String(reportsCount)} valueColor={colors.darkTeal} />
-          <StatTile label={t('home.packages')} value={String(activePackages)} valueColor={colors.emerald} />
+          <Pressable style={{ flex: 1 }} onPress={() => router.push('/profile/health')} accessibilityRole="button">
+            <StatTile
+              label={t('home.bmiTitle')}
+              value={bmi ? String(bmi) : '—'}
+              valueColor={bmiCat?.color ?? colors.emerald}
+            />
+          </Pressable>
         </View>
 
-        {/* 4. Quick actions */}
+        {/* Quick actions — the 5-stage focus */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('home.quickActions')}</Text>
           <View style={styles.actionGrid}>
             <QuickAction
               label={t('home.actionBook')}
               background={colors.mintTint}
-              icon={<CalendarPlus size={22} color={colors.darkTeal} />}
+              icon={<Stethoscope size={22} color={colors.darkTeal} />}
               onPress={() => router.push('/(tabs)/book')}
             />
             <QuickAction
-              label={t('home.actionLabTests')}
+              label={t('home.actionAppointments')}
               background={colors.greenTint}
-              icon={<FlaskConical size={22} color={colors.emerald} />}
-              onPress={() => router.push('/lab-tests')}
-            />
-            <QuickAction
-              label={t('home.actionPackages')}
-              background={colors.blueTint}
-              icon={<Package size={22} color={colors.info} />}
-              onPress={() => router.push('/(tabs)/packages')}
+              icon={<CalendarCheck size={22} color={colors.emerald} />}
+              onPress={() => router.push('/(tabs)/passbook')}
             />
             <QuickAction
               label={t('home.actionReports')}
               background={colors.amberTint}
               icon={<FileText size={22} color={colors.warning} />}
-              onPress={() => router.push('/reports' as never)}
+              onPress={() => router.push('/(tabs)/packages')}
             />
           </View>
         </View>
 
-        {/* 5. Launch banner */}
-        {config.data?.banner ? (
-          <LaunchBanner
-            title={config.data.banner.title}
-            subtitle={config.data.banner.subtitle}
-            onPress={() => {
-              const code = config.data?.banner.action_code;
-              if (code) router.push({ pathname: '/packages/[code]', params: { code } });
-            }}
-          />
-        ) : null}
-
-        {/* 6. Upcoming */}
+        {/* Upcoming appointment */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('home.upcoming')}</Text>
           {upcoming.isLoading ? (
@@ -197,57 +174,9 @@ export default function HomeScreen(): React.ReactElement {
             <Text style={styles.emptyInline}>{t('common.empty')}</Text>
           )}
         </View>
-
-        {/* 7. Passbook entries */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeading}>
-            <Text style={styles.sectionTitle}>{t('home.passbookEntries')}</Text>
-            <Pressable
-              accessibilityRole="link"
-              onPress={() => router.push('/(tabs)/passbook')}
-              hitSlop={8}
-            >
-              <Text style={styles.viewAll}>{t('common.viewAll')}</Text>
-            </Pressable>
-          </View>
-
-          {isLoading ? (
-            <View style={{ gap: 10 }}>
-              <Skeleton height={48} radius={12} />
-              <Skeleton height={48} radius={12} />
-              <Skeleton height={48} radius={12} />
-            </View>
-          ) : passbook.data && passbook.data.items.length > 0 ? (
-            passbook.data.items.slice(0, 3).map((entry, idx, arr) => (
-              <ActivityRow
-                key={entry.id}
-                type={entry.type}
-                title={entry.title}
-                subtitle={entry.subtitle}
-                amount={entry.amount}
-                status={entry.status}
-                showBorder={idx < arr.length - 1}
-                activeLabel={t('home.activeBadge')}
-                onPress={() => routeForEntry(router, entry.type, entry.reference_id)}
-              />
-            ))
-          ) : (
-            <Text style={styles.emptyInline}>{t('common.empty')}</Text>
-          )}
-        </View>
       </ScrollView>
     </SafeAreaView>
   );
-}
-
-function routeForEntry(
-  router: ReturnType<typeof useRouter>,
-  type: 'consultation' | 'lab' | 'package',
-  referenceId: number,
-): void {
-  if (type === 'consultation') router.push({ pathname: '/appointments/[id]', params: { id: String(referenceId) } });
-  else if (type === 'lab') router.push({ pathname: '/lab-orders/[id]', params: { id: String(referenceId) } });
-  else router.push('/(tabs)/packages');
 }
 
 const styles = StyleSheet.create({
@@ -284,8 +213,6 @@ const styles = StyleSheet.create({
   stats: { flexDirection: 'row', gap: 8, paddingHorizontal: spacing.screen, marginBottom: spacing.lg },
   section: { paddingHorizontal: spacing.screen, marginBottom: spacing.lg },
   sectionTitle: { fontFamily: fontFamily.medium, fontSize: 13, color: colors.textPrimary, marginBottom: 12 },
-  sectionHeading: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 6 },
-  viewAll: { fontFamily: fontFamily.medium, fontSize: 11, color: colors.darkTeal },
   actionGrid: { flexDirection: 'row', gap: 10 },
   emptyInline: { fontFamily: fontFamily.regular, fontSize: 13, color: colors.textTertiary, marginTop: spacing.xs },
 });

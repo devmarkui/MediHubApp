@@ -7,7 +7,14 @@ export const patientsApi = {
   me() {
     return get<Patient>('/patients/me');
   },
-  update(payload: Partial<Pick<Patient, 'name' | 'email' | 'dob' | 'gender' | 'blood_group' | 'language'>>) {
+  update(
+    payload: Partial<
+      Pick<
+        Patient,
+        'name' | 'email' | 'dob' | 'gender' | 'blood_group' | 'height_cm' | 'weight_kg' | 'language'
+      >
+    >,
+  ) {
     return put<Patient>('/patients/me', payload);
   },
   registerPushToken(token: string) {

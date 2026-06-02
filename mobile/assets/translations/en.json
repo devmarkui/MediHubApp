@@ -55,13 +55,29 @@
     "email": "Email (optional)",
     "dob": "Date of birth (optional)",
     "gender": "Gender (optional)",
-    "create": "Create my account"
+    "create": "Create my account",
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in with your mobile number and password.",
+    "password": "Password",
+    "passwordPlaceholder": "Your password",
+    "signIn": "Sign in",
+    "noAccount": "New to MediHub?",
+    "createAccount": "Create an account",
+    "haveAccount": "Already have an account?",
+    "signupTitle": "Create your account",
+    "signupSubtitle": "Use your mobile number to get started.",
+    "confirmPassword": "Confirm password",
+    "loginFailed": "Could not sign in",
+    "signupFailed": "Could not create account"
   },
   "tabs": {
     "home": "Home",
     "passbook": "Passbook",
     "book": "Book",
     "packages": "Packages",
+    "doctors": "Doctors",
+    "appointments": "Appointments",
+    "reports": "Reports",
     "profile": "Profile"
   },
   "home": {
@@ -75,13 +91,22 @@
     "reports": "REPORTS",
     "packages": "PACKAGES",
     "quickActions": "Quick actions",
-    "actionBook": "Book",
+    "actionBook": "Book doctor",
     "actionLabTests": "Lab tests",
     "actionPackages": "Packages",
-    "actionReports": "Reports",
+    "actionReports": "My reports",
+    "actionAppointments": "Appointments",
     "upcoming": "Upcoming",
     "passbookEntries": "Passbook entries",
-    "activeBadge": "Active"
+    "activeBadge": "Active",
+    "openNow": "Open now",
+    "closedNow": "Closed",
+    "openHoursTitle": "We’re open today",
+    "bmiTitle": "Your BMI",
+    "bmiAdd": "Add height & weight",
+    "bmiNone": "—",
+    "height": "Height",
+    "weight": "Weight"
   },
   "passbook": {
     "title": "Passbook",
@@ -101,19 +126,25 @@
     "packageBody": "Bundled checkups at a discount."
   },
   "doctors": {
-    "title": "Choose a doctor",
+    "title": "Specialist doctors",
+    "subtitle": "Pick a specialist and request an appointment.",
     "fee": "Consultation fee",
-    "bookCta": "Book appointment",
+    "bookCta": "Request appointment",
     "pickDate": "Pick a date",
     "pickSlot": "Pick a slot",
     "noSlots": "No slots available for this date.",
     "confirmTitle": "Confirm appointment",
     "confirmBody": "{{doctor}} on {{date}} at {{time}}",
-    "bookingFailed": "Couldn’t book that slot."
+    "bookingFailed": "Couldn’t request that slot.",
+    "whatsappNote": "Your request is saved and sent to MediHub on WhatsApp for confirmation.",
+    "sendingWhatsapp": "Opening WhatsApp…"
   },
   "appointments": {
+    "title": "My appointments",
+    "empty": "You haven’t requested any appointments yet.",
     "upcoming": "Upcoming",
     "past": "Past",
+    "all": "All",
     "cancel": "Cancel appointment",
     "cancelConfirm": "Cancel this appointment?",
     "cancelled": "Cancelled",
@@ -145,10 +176,22 @@
     }
   },
   "reports": {
-    "title": "Reports",
+    "title": "Medical reports",
+    "subtitle": "Your MediHub and previous records, in one place.",
     "download": "Open",
-    "empty": "No reports yet.",
-    "released": "Released {{date}}"
+    "empty": "No reports yet. New reports added by MediHub will appear here.",
+    "released": "Released {{date}}",
+    "legacyBadge": "Previous record"
+  },
+  "health": {
+    "title": "Health details",
+    "subtitle": "Add your height and weight to track your BMI. You can fill this anytime.",
+    "heightLabel": "Height (cm)",
+    "weightLabel": "Weight (kg)",
+    "save": "Save details",
+    "skip": "Skip for now",
+    "bmiLabel": "Your BMI",
+    "optionalNote": "These details are optional — skip and add them later from your profile."
   },
   "packages": {
     "title": "Packages",
@@ -169,6 +212,7 @@
   "profile": {
     "title": "Profile",
     "editProfile": "Edit profile",
+    "health": "Health details & BMI",
     "family": "Family members",
     "language": "Language",
     "notifications": "Notifications",

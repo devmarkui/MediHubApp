@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { BookMarked, CalendarPlus, Home, Package, User } from 'lucide-react-native';
+import { CalendarCheck, FileText, Home, Stethoscope, User } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 
@@ -33,25 +33,28 @@ export default function TabsLayout(): React.ReactElement {
           tabBarIcon: ({ color }) => <Home size={22} color={color} />,
         }}
       />
-      <Tabs.Screen
-        name="passbook"
-        options={{
-          title: t('tabs.passbook'),
-          tabBarIcon: ({ color }) => <BookMarked size={22} color={color} />,
-        }}
-      />
+      {/* file: book.tsx — repurposed as the Specialist Doctors list (Stage 5) */}
       <Tabs.Screen
         name="book"
         options={{
-          title: t('tabs.book'),
-          tabBarIcon: ({ color }) => <CalendarPlus size={22} color={color} />,
+          title: t('tabs.doctors'),
+          tabBarIcon: ({ color }) => <Stethoscope size={22} color={color} />,
         }}
       />
+      {/* file: passbook.tsx — repurposed as My Appointments (Stage 5) */}
+      <Tabs.Screen
+        name="passbook"
+        options={{
+          title: t('tabs.appointments'),
+          tabBarIcon: ({ color }) => <CalendarCheck size={22} color={color} />,
+        }}
+      />
+      {/* file: packages.tsx — repurposed as Medical Reports / EMR (Stage 3) */}
       <Tabs.Screen
         name="packages"
         options={{
-          title: t('tabs.packages'),
-          tabBarIcon: ({ color }) => <Package size={22} color={color} />,
+          title: t('tabs.reports'),
+          tabBarIcon: ({ color }) => <FileText size={22} color={color} />,
         }}
       />
       <Tabs.Screen

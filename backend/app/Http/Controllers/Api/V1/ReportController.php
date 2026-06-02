@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Resources\ReportResource;
 use App\Models\Patient;
 use App\Models\Report;
+use App\Services\LegacyEmrService;
 use App\Services\ReportStorageService;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
@@ -14,7 +15,10 @@ use Illuminate\Http\Request;
 
 class ReportController
 {
-    public function __construct(private ReportStorageService $files) {}
+    public function __construct(
+        private ReportStorageService $files,
+        private LegacyEmrService $legacy,
+    ) {}
 
     public function index(Request $request): JsonResponse
     {
@@ -27,7 +31,13 @@ class ReportController
             $query->where('report_type', $type);
         }
 
-        return ApiResponse::ok(ReportResource::collection($query->get())->resolve());
+        $reports = ReportResource::collection($query->get())->resolve();
+
+        // Stage 3 — merge historical records pulled from the legacy EMR by phone.
+        // No-op until the legacy API is configured (services.emr.*).
+        $legacy = $this->legacy->fetchForPhone($patient->phone);
+
+        return ApiResponse::ok([...$reports, ...$legacy]);
     }
 
     public function show(Request $request, Report $report): JsonResponse

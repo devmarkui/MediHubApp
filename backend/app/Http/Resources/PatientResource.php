@@ -27,6 +27,9 @@ class PatientResource extends JsonResource
             'dob' => optional($patient->dob)->toDateString(),
             'gender' => $patient->gender,
             'blood_group' => $patient->blood_group,
+            'height_cm' => $patient->height_cm !== null ? (float) $patient->height_cm : null,
+            'weight_kg' => $patient->weight_kg !== null ? (float) $patient->weight_kg : null,
+            'bmi' => $patient->bmi(),
             'language' => $patient->language,
             'avatar_url' => $patient->avatar_path
                 ? Storage::disk('public')->url($patient->avatar_path)

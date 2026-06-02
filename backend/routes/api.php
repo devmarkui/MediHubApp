@@ -20,9 +20,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     // Public
+    Route::post('auth/login', [AuthController::class, 'login']);
+    Route::post('auth/register', [AuthController::class, 'register']);
     Route::post('auth/request-otp', [AuthController::class, 'requestOtp']);
     Route::post('auth/verify-otp', [AuthController::class, 'verifyOtp']);
-    Route::post('auth/register', [AuthController::class, 'register']);
 
     Route::get('doctors', [DoctorController::class, 'index']);
     Route::get('doctors/{doctor_id}/available-slots', [DoctorController::class, 'slots'])

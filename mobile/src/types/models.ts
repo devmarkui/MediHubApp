@@ -11,6 +11,9 @@ export type Patient = {
   dob: string | null;
   gender: Gender | null;
   blood_group: BloodGroup | null;
+  height_cm: number | null;
+  weight_kg: number | null;
+  bmi: number | null;
   language: Language;
   avatar_url: string | null;
   parent_patient_id: number | null;
@@ -96,14 +99,17 @@ export type LabOrder = {
 
 export type ReportType = 'lab' | 'consultation' | 'prescription' | 'imaging';
 export type Report = {
-  id: number;
-  patient_id: number;
+  id: number | string;
+  patient_id: number | null;
   lab_order_id: number | null;
   appointment_id: number | null;
   report_type: ReportType;
   title: string;
   file_size_kb: number;
   released_at: string;
+  // Stage 3 — 'medihub' for new reports, 'legacy' for old EMR records.
+  source?: 'medihub' | 'legacy';
+  download_url?: string | null;
 };
 
 export type Package = {
@@ -182,7 +188,16 @@ export type AppConfig = {
     email: string;
     hours: string;
   };
+  opening_hours: {
+    open_time: string;
+    close_time: string;
+    open_label: string;
+    close_label: string;
+    days_label: string;
+    is_open_now: boolean;
+  };
   banner: { title: string; subtitle: string; action_code: string | null };
+  appointment_whatsapp: string;
   min_supported_version: string;
   force_update_version: string;
   maintenance_mode: boolean;

@@ -21,6 +21,8 @@ class UpdatePatientRequest extends FormRequest
             'dob' => ['sometimes', 'nullable', 'date', 'before:today'],
             'gender' => ['sometimes', 'nullable', 'in:male,female,other'],
             'blood_group' => ['sometimes', 'nullable', 'in:A+,A-,B+,B-,AB+,AB-,O+,O-'],
+            'height_cm' => ['sometimes', 'nullable', 'numeric', 'min:30', 'max:300'],
+            'weight_kg' => ['sometimes', 'nullable', 'numeric', 'min:1', 'max:500'],
             'language' => ['sometimes', 'in:en,si,ta'],
         ];
     }

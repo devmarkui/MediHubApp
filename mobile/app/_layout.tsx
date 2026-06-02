@@ -33,7 +33,7 @@ function useAuthGuard(hydrated: boolean): void {
 
     if (!token) {
       if (!inAuth) {
-        router.replace(onboardingComplete ? '/(auth)/phone' : '/(auth)/onboarding');
+        router.replace(onboardingComplete ? '/(auth)/login' : '/(auth)/onboarding');
       }
       return;
     }

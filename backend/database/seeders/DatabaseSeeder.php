@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
 use App\Models\Doctor;
 use App\Models\DoctorSchedule;
 use App\Models\LabTest;
@@ -18,10 +19,23 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->seedAdmin();
         $this->seedDoctors();
         $this->seedLabTests();
         $this->seedPackages();
         $this->seedTestPatient();
+    }
+
+    private function seedAdmin(): void
+    {
+        Admin::query()->updateOrCreate(
+            ['email' => env('ADMIN_EMAIL', 'admin@medihub.lk')],
+            [
+                'name' => 'MediHub Admin',
+                // 'hashed' cast on the Admin model hashes this on save.
+                'password' => env('ADMIN_PASSWORD', 'medihub123'),
+            ],
+        );
     }
 
     private function seedDoctors(): void
@@ -227,10 +241,14 @@ class DatabaseSeeder extends Seeder
         $patient = Patient::query()->create([
             'phone' => '+94752977591',
             'name' => 'Ibrahim Test',
+            // 'hashed' cast hashes this on save. Login: 0752977591 / medihub123
+            'password' => 'medihub123',
             'email' => 'test@medihub.lk',
             'dob' => '1992-04-15',
             'gender' => 'male',
             'blood_group' => 'O+',
+            'height_cm' => 175,
+            'weight_kg' => 72,
             'language' => 'en',
         ]);
 

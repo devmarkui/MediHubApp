@@ -57,4 +57,10 @@ return [
         'sender_id' => env('NOTIFY_LK_SENDER_ID', 'MediHub'),
     ],
 
+    // Stage 3 — legacy EMR bridge. Fill these once the old-system API is shared.
+    'emr' => [
+        'base_url' => env('EMR_API_BASE_URL'),
+        'key' => env('EMR_API_KEY'),
+    ],
+
 ];

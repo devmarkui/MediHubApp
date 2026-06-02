@@ -3,6 +3,26 @@ import { get, post } from './client';
 import type { Patient } from '@/types/models';
 
 export const authApi = {
+  // Stage 1 — sign in with mobile number + password.
+  login(phone: string, password: string) {
+    return post<{ token: string; patient: Patient }>('/auth/login', { phone, password });
+  },
+  // Stage 1 — self sign-up (password). OTP fields kept optional for later.
+  register(payload: {
+    phone: string;
+    name: string;
+    password: string;
+    email?: string;
+    dob?: string;
+    gender?: 'male' | 'female' | 'other';
+    height_cm?: number;
+    weight_kg?: number;
+    otp_id?: number;
+    code?: string;
+  }) {
+    return post<{ token: string; patient: Patient }>('/auth/register', payload);
+  },
+  // OTP scaffolding — ready for when the SMS gateway is wired up.
   requestOtp(phone: string) {
     return post<{ otp_id: number }>('/auth/request-otp', { phone });
   },
@@ -11,17 +31,6 @@ export const authApi = {
       '/auth/verify-otp',
       { phone, otp_id: otpId, code },
     );
-  },
-  register(payload: {
-    phone: string;
-    otp_id: number;
-    code: string;
-    name: string;
-    email?: string;
-    dob?: string;
-    gender?: 'male' | 'female' | 'other';
-  }) {
-    return post<{ token: string; patient: Patient }>('/auth/register', payload);
   },
   logout() {
     return post<null>('/auth/logout');
