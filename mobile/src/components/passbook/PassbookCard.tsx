@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { colors, fontFamily, radius, spacing } from '@/theme';
 import { passbookDisplay } from '@/utils/format';
@@ -11,6 +11,10 @@ type Props = {
   passbookLabel?: string;
   memberLabel?: string;
   sinceLabel?: string;
+  // When set, replaces the mono passbook number with custom large text.
+  centerText?: string;
+  // When set, the whole card becomes tappable.
+  onPress?: () => void;
 };
 
 export function PassbookCard({
@@ -21,11 +25,13 @@ export function PassbookCard({
   passbookLabel = 'HEALTH PASSBOOK',
   memberLabel = 'MEMBER',
   sinceLabel = 'SINCE',
+  centerText,
+  onPress,
 }: Props): React.ReactElement {
   const since = memberSince ? memberSince.slice(0, 4) : '—';
 
-  return (
-    <View style={styles.card}>
+  const body = (
+    <>
       <View style={[styles.deco, styles.dec1]} />
       <View style={[styles.deco, styles.dec2]} />
       <View style={[styles.deco, styles.dec3]} />
@@ -42,7 +48,11 @@ export function PassbookCard({
         </View>
       </View>
 
-      <Text style={styles.passbookNo}>{passbookDisplay(passbookNo)}</Text>
+      {centerText !== undefined ? (
+        <Text style={styles.centerText}>{centerText}</Text>
+      ) : (
+        <Text style={styles.passbookNo}>{passbookDisplay(passbookNo)}</Text>
+      )}
 
       <View style={styles.bottomRow}>
         <View>
@@ -54,8 +64,22 @@ export function PassbookCard({
           <Text style={styles.value}>{since}</Text>
         </View>
       </View>
-    </View>
+    </>
   );
+
+  if (onPress) {
+    return (
+      <Pressable
+        onPress={onPress}
+        accessibilityRole="button"
+        style={({ pressed }) => [styles.card, pressed ? { opacity: 0.92 } : null]}
+      >
+        {body}
+      </Pressable>
+    );
+  }
+
+  return <View style={styles.card}>{body}</View>;
 }
 
 const styles = StyleSheet.create({
@@ -104,6 +128,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Courier',
     fontSize: 15,
     letterSpacing: 4,
+    color: colors.surface,
+    marginBottom: 18,
+  },
+  centerText: {
+    fontFamily: fontFamily.medium,
+    fontSize: 26,
+    letterSpacing: 0.5,
     color: colors.surface,
     marginBottom: 18,
   },

@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
-import { Bell, CalendarCheck, FileText, Stethoscope } from 'lucide-react-native';
+import { Bell, FileText, Package, Stethoscope } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
-import { Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { formatInTimeZone } from 'date-fns-tz';
 
@@ -122,15 +122,17 @@ export default function HomeScreen(): React.ReactElement {
           />
         )}
 
-        {/* Health passbook identity card */}
+        {/* Loyalty points card (same style as the health passbook). Coming soon. */}
         <PassbookCard
           passbookNo={patient?.passbook_no ?? null}
           memberName={patient?.name ?? '—'}
           memberSince={patient?.member_since ?? null}
-          verifiedLabel={`● ${t('common.verified')}`}
-          passbookLabel={t('home.passbookLabel')}
+          verifiedLabel={`★ ${t('home.rewards')}`}
+          passbookLabel={t('home.loyaltyTitle')}
+          centerText={t('home.loyaltyPoints')}
           memberLabel={t('home.member')}
           sinceLabel={t('home.since')}
+          onPress={() => Alert.alert(t('home.loyaltyComingTitle'), t('home.loyaltyComingBody'))}
         />
 
         {/* Stage 2 — stats incl. BMI */}
@@ -157,10 +159,10 @@ export default function HomeScreen(): React.ReactElement {
               onPress={() => router.push('/(tabs)/book')}
             />
             <QuickAction
-              label={t('home.actionAppointments')}
+              label={t('home.actionPackages')}
               background={colors.greenTint}
-              icon={<CalendarCheck size={22} color={colors.emerald} />}
-              onPress={() => router.push('/(tabs)/passbook')}
+              icon={<Package size={22} color={colors.emerald} />}
+              onPress={() => router.push('/packages')}
             />
             <QuickAction
               label={t('home.actionReports')}

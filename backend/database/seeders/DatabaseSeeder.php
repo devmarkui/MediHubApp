@@ -14,6 +14,7 @@ use App\Models\Patient;
 use App\Models\Report;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -40,51 +41,112 @@ class DatabaseSeeder extends Seeder
 
     private function seedDoctors(): void
     {
+        // MediHub Consultant Panel. Each session becomes a 2-hour bookable window
+        // (15-minute slots) on the listed day(s).
+        $allWeek = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
         $doctors = [
             [
-                'name' => 'Dr. Nimal Perera',
-                'slug' => 'dr-nimal-perera',
-                'specialization' => 'General Physician',
-                'qualifications' => 'MBBS (Colombo), MD (Internal Medicine)',
-                'bio' => 'Dr. Nimal Perera has over 18 years of experience in general medicine and preventive care.',
-                'consultation_fee' => 2500.00,
-                'languages' => ['en', 'si'],
-                'is_active' => true,
-                'display_order' => 1,
-            ],
-            [
-                'name' => 'Dr. Anjali Fernando',
-                'slug' => 'dr-anjali-fernando',
-                'specialization' => 'Paediatrician',
-                'qualifications' => 'MBBS, DCH, MD (Paediatrics)',
-                'bio' => 'Dr. Anjali Fernando specialises in child health, developmental assessments, and immunisation.',
-                'consultation_fee' => 3000.00,
+                'name' => 'Dr. H.R. Mohammed',
+                'specialization' => 'VOG (Obstetrician–Gynecologist)',
+                'qualifications' => 'MBBS, MS (OBG)',
+                'fee' => 3000,
                 'languages' => ['en', 'si', 'ta'],
-                'is_active' => true,
-                'display_order' => 2,
+                'sessions' => array_map(fn ($d) => [$d, '12:00:00', '14:00:00'], $allWeek),
             ],
             [
-                'name' => 'Dr. Saman Wickramasinghe',
-                'slug' => 'dr-saman-wickramasinghe',
-                'specialization' => 'Cardiologist',
-                'qualifications' => 'MBBS, MD (Cardiology), FRCP',
-                'bio' => 'Consultant cardiologist with a focus on preventive cardiology and lifestyle interventions.',
-                'consultation_fee' => 3500.00,
+                'name' => 'Dr. Karu Prassanna',
+                'specialization' => 'Physician (VP)',
+                'qualifications' => 'MBBS, MD (General Medicine)',
+                'fee' => 2500,
+                'languages' => ['en', 'si', 'ta'],
+                'sessions' => [['wed', '17:00:00', '19:00:00'], ['sun', '15:00:00', '17:00:00']],
+            ],
+            [
+                'name' => 'Dr. (Mrs) Apeksha Perera',
+                'specialization' => 'Dermatologist',
+                'qualifications' => 'MBBS, MD (Dermatology)',
+                'fee' => 3000,
                 'languages' => ['en', 'si'],
-                'is_active' => true,
-                'display_order' => 3,
+                'sessions' => [['mon', '16:00:00', '18:00:00']],
+            ],
+            [
+                'name' => 'Dr. N.P. Karunaratne',
+                'specialization' => 'Dermatologist',
+                'qualifications' => 'MBBS, MD (Dermatology)',
+                'fee' => 3000,
+                'languages' => ['en', 'si'],
+                'sessions' => [['tue', '18:00:00', '20:00:00']],
+            ],
+            [
+                'name' => 'Dr. M.I. Ahamed Ifthikar',
+                'specialization' => 'Psychology Counseling',
+                'qualifications' => 'MBBS, MSc (Clinical Psychology)',
+                'fee' => 2500,
+                'languages' => ['en', 'si', 'ta'],
+                'sessions' => [['sat', '10:00:00', '12:00:00']],
+            ],
+            [
+                'name' => 'Dr. Matheeshan',
+                'specialization' => 'General Surgeon',
+                'qualifications' => 'MBBS, MS (Surgery)',
+                'fee' => 3500,
+                'languages' => ['en', 'si', 'ta'],
+                'sessions' => [['sat', '16:00:00', '18:00:00'], ['sun', '16:00:00', '18:00:00']],
+            ],
+            [
+                'name' => 'Dr. Ananda Piyathissa',
+                'specialization' => 'Pediatrician',
+                'qualifications' => 'MBBS, DCH, MD (Paediatrics)',
+                'fee' => 3000,
+                'languages' => ['en', 'si'],
+                'sessions' => [['sun', '12:30:00', '14:30:00']],
+            ],
+            [
+                'name' => 'Dr. Subanthan',
+                'specialization' => 'Radiologist (US Scan)',
+                'qualifications' => 'MBBS, MD (Radiology)',
+                'fee' => 4000,
+                'languages' => ['en', 'si', 'ta'],
+                'sessions' => [['sat', '12:00:00', '14:00:00']],
+            ],
+            [
+                'name' => 'Dr. Krishnagar',
+                'specialization' => 'Radiologist (US Scan)',
+                'qualifications' => 'MBBS, MD (Radiology)',
+                'fee' => 4000,
+                'languages' => ['en', 'si', 'ta'],
+                'sessions' => [['wed', '17:00:00', '19:00:00']],
+            ],
+            [
+                'name' => 'Dr. Nimali Jayasuriya',
+                'specialization' => 'Venereologist (STD)',
+                'qualifications' => 'MBBS, MD (Venereology)',
+                'fee' => 3000,
+                'languages' => ['en', 'si'],
+                'sessions' => [['fri', '17:00:00', '19:00:00']],
             ],
         ];
 
-        foreach ($doctors as $data) {
-            $doctor = Doctor::query()->create($data);
+        foreach ($doctors as $i => $data) {
+            $doctor = Doctor::query()->create([
+                'name' => $data['name'],
+                'slug' => Str::slug($data['name']),
+                'specialization' => $data['specialization'],
+                'qualifications' => $data['qualifications'],
+                'bio' => $data['name'].' — consultant '.$data['specialization'].' at MediHub Clinic & Laboratory.',
+                'consultation_fee' => $data['fee'],
+                'languages' => $data['languages'],
+                'is_active' => true,
+                'display_order' => $i + 1,
+            ]);
 
-            foreach (['mon', 'tue', 'wed', 'thu', 'fri', 'sat'] as $day) {
+            foreach ($data['sessions'] as [$day, $start, $end]) {
                 DoctorSchedule::query()->create([
                     'doctor_id' => $doctor->id,
                     'day_of_week' => $day,
-                    'start_time' => '09:00:00',
-                    'end_time' => '17:00:00',
+                    'start_time' => $start,
+                    'end_time' => $end,
                     'slot_minutes' => 15,
                     'max_patients' => 20,
                     'is_active' => true,
@@ -139,100 +201,71 @@ class DatabaseSeeder extends Seeder
 
     private function seedPackages(): void
     {
+        // MediHub Health Checkup Packages (flyer pricing — single price, no discount).
+        // Every package also includes the free services listed below.
+        $freeServices = 'Free with every package: Blood Pressure, Vision Check, Doctor Consultation, Height/Weight check & Body Composition examination. (12-hour fasting required for blood tests.)';
+
         $packages = [
             [
-                'code' => 'PKG-FULL-BODY',
-                'name' => 'Full Body Check-up',
-                'name_si' => 'සම්පූර්ණ ශරීර පරීක්ෂණය',
-                'name_ta' => 'முழு உடல் பரிசோதனை',
-                'description' => 'A comprehensive screening package covering blood, cardiac, kidney, liver and diabetes markers — ideal for an annual health review.',
-                'original_price' => 18000,
-                'discounted_price' => 13500,
-                'validity_days' => 365,
-                'total_visits' => 1,
-                'inclusions' => [
-                    'General physician consultation',
-                    'Full Blood Count',
-                    'Fasting Blood Sugar',
-                    'Lipid Profile',
-                    'Liver Function Tests',
-                    'Renal Function Tests',
-                    'TSH',
-                    'Urine Full Report',
-                ],
-                'included_test_codes' => ['T0001', 'T0010', 'T0012', 'T0013', 'T0014', 'T0020', 'T0041'],
+                'code' => 'PKG-BASIC',
+                'name' => 'Basic Screening Package',
+                'price' => 2600,
+                'inclusions' => ['Full Blood Count', 'Fasting Blood Sugar', 'Lipid Profile', 'ESR', 'Urine Full Report'],
+                'included_test_codes' => ['T0001', 'T0010', 'T0012', 'T0002', 'T0041'],
+                'is_featured' => false,
+            ],
+            [
+                'code' => 'PKG-ADVANCE',
+                'name' => 'Advance Screening Package',
+                'price' => 4250,
+                'inclusions' => ['Full Blood Count', 'Fasting Blood Sugar', 'Lipid Profile', 'ESR', 'Urine Full Report', 'Serum Creatinine', 'AST / ALT'],
+                'included_test_codes' => ['T0001', 'T0010', 'T0012', 'T0002', 'T0041', 'T0015', 'T0013'],
                 'is_featured' => true,
-                'is_active' => true,
-                'display_order' => 1,
             ],
             [
-                'code' => 'PKG-DIABETES',
-                'name' => 'Diabetes Care Package',
-                'name_si' => 'දියවැඩියා රැකවරණ පැකේජය',
-                'name_ta' => 'நீரிழிவு பராமரிப்பு தொகுப்பு',
-                'description' => 'Quarterly monitoring package for people living with type 2 diabetes.',
-                'original_price' => 8500,
-                'discounted_price' => 6200,
-                'validity_days' => 90,
-                'total_visits' => 1,
-                'inclusions' => ['Fasting Blood Sugar', 'HbA1c', 'Renal Function Tests', 'Urine Full Report'],
-                'included_test_codes' => ['T0010', 'T0011', 'T0014', 'T0041'],
-                'is_featured' => false,
-                'is_active' => true,
-                'display_order' => 2,
+                'code' => 'PKG-ESSENTIAL',
+                'name' => 'Essential Screening Package',
+                'price' => 7500,
+                'inclusions' => ['Full Blood Count', 'Fasting Blood Sugar', 'Lipid Profile', 'ESR', 'Urine Full Report', 'Serum Creatinine', 'AST / ALT', 'TSH', 'HbA1c'],
+                'included_test_codes' => ['T0001', 'T0010', 'T0012', 'T0002', 'T0041', 'T0015', 'T0013', 'T0020', 'T0011'],
+                'is_featured' => true,
             ],
             [
-                'code' => 'PKG-CARDIAC',
-                'name' => 'Heart Health Package',
-                'name_si' => 'හදවත් සෞඛ්‍ය පැකේජය',
-                'name_ta' => 'இதய ஆரோக்கிய தொகுப்பு',
-                'description' => 'Targeted cardiac screening with cardiologist consultation, lipid profile and ECG-ready evaluation.',
-                'original_price' => 12500,
-                'discounted_price' => 9500,
-                'validity_days' => 180,
-                'total_visits' => 1,
-                'inclusions' => ['Cardiologist consultation', 'Lipid Profile', 'ESR', 'CRP'],
-                'included_test_codes' => ['T0012', 'T0002', 'T0030'],
+                'code' => 'PKG-KIDNEY',
+                'name' => 'Kidney Screening Package',
+                'price' => 5500,
+                'inclusions' => ['Full Blood Count', 'Serum Electrolytes', 'Serum Creatinine', 'Blood Urea', 'Serum Calcium', 'Urine Micro Albumin', 'Urine Full Report'],
+                'included_test_codes' => ['T0001', 'T0015', 'T0014', 'T0041'],
                 'is_featured' => false,
-                'is_active' => true,
-                'display_order' => 3,
             ],
             [
-                'code' => 'PKG-WOMEN',
-                'name' => 'Women’s Wellness Package',
-                'name_si' => 'කාන්තා සුවතා පැකේජය',
-                'name_ta' => 'பெண்கள் நலன் தொகுப்பு',
-                'description' => 'Wellness screening for women: thyroid, vitamin D, blood profile and consultation.',
-                'original_price' => 14500,
-                'discounted_price' => 10800,
-                'validity_days' => 365,
-                'total_visits' => 1,
-                'inclusions' => ['Doctor consultation', 'Full Blood Count', 'TSH', 'Vitamin D'],
-                'included_test_codes' => ['T0001', 'T0020', 'T0023'],
+                'code' => 'PKG-DIABETIC',
+                'name' => 'Diabetic Screening Package',
+                'price' => 6250,
+                'inclusions' => ['Full Blood Count', 'Fasting Blood Sugar', 'Lipid Profile', 'Serum Creatinine', 'HbA1c', 'Urine Micro Albumin', 'Urine Full Report'],
+                'included_test_codes' => ['T0001', 'T0010', 'T0012', 'T0015', 'T0011', 'T0041'],
                 'is_featured' => false,
-                'is_active' => true,
-                'display_order' => 4,
-            ],
-            [
-                'code' => 'PKG-KIDS',
-                'name' => 'Child Health Package',
-                'name_si' => 'ළමා සෞඛ්‍ය පැකේජය',
-                'name_ta' => 'குழந்தை ஆரோக்கிய தொகுப்பு',
-                'description' => 'Paediatrician consultation with growth assessment and basic screening.',
-                'original_price' => 6500,
-                'discounted_price' => 4800,
-                'validity_days' => 180,
-                'total_visits' => 1,
-                'inclusions' => ['Paediatrician consultation', 'Haemoglobin', 'Urine Full Report'],
-                'included_test_codes' => ['T0003', 'T0041'],
-                'is_featured' => false,
-                'is_active' => true,
-                'display_order' => 5,
             ],
         ];
 
-        foreach ($packages as $data) {
-            Package::query()->create($data);
+        foreach ($packages as $i => $data) {
+            Package::query()->create([
+                'code' => $data['code'],
+                'name' => $data['name'],
+                'name_si' => null,
+                'name_ta' => null,
+                'description' => $data['name'].'. '.$freeServices,
+                // Flyer shows a single price — no discount.
+                'original_price' => $data['price'],
+                'discounted_price' => $data['price'],
+                'validity_days' => 365,
+                'total_visits' => 1,
+                'inclusions' => $data['inclusions'],
+                'included_test_codes' => $data['included_test_codes'],
+                'is_featured' => $data['is_featured'],
+                'is_active' => true,
+                'display_order' => $i + 1,
+            ]);
         }
     }
 

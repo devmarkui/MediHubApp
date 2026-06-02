@@ -102,6 +102,11 @@
     "openNow": "Open now",
     "closedNow": "Closed",
     "openHoursTitle": "We’re open today",
+    "loyaltyTitle": "LOYALTY POINTS",
+    "loyaltyPoints": "0 Points",
+    "rewards": "REWARDS",
+    "loyaltyComingTitle": "Loyalty rewards",
+    "loyaltyComingBody": "Earn points on every visit, test and package — coming soon!",
     "bmiTitle": "Your BMI",
     "bmiAdd": "Add height & weight",
     "bmiNone": "—",
@@ -204,12 +209,18 @@
     "ecPhone": "Contact phone"
   },
   "packages": {
-    "title": "Packages",
-    "featured": "Featured",
+    "title": "Health checkup packages",
+    "subtitle": "Bundled screening packages — book and visit MediHub when convenient.",
+    "featured": "Popular",
     "inclusions": "What’s included",
+    "testCount": "{{count}} tests included",
     "validity": "Valid for {{days}} days",
     "purchase": "Purchase package",
-    "purchased": "Package purchased"
+    "purchased": "Package purchased",
+    "book": "Book this package",
+    "whatsappNote": "Your booking is saved and sent to MediHub on WhatsApp to arrange your visit.",
+    "bookedTitle": "Package booked",
+    "bookedBody": "We’ve received your booking. MediHub will contact you to arrange your visit."
   },
   "payment": {
     "title": "Payment",

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AppointmentController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DoctorController;
+use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Admin\ReportController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('doctors/{doctor}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
         Route::put('doctors/{doctor}', [DoctorController::class, 'update'])->name('doctors.update');
         Route::delete('doctors/{doctor}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
+
+        Route::get('packages', [PackageController::class, 'index'])->name('packages.index');
+        Route::get('packages/create', [PackageController::class, 'create'])->name('packages.create');
+        Route::get('packages/bookings', [PackageController::class, 'bookings'])->name('packages.bookings');
+        Route::put('packages/bookings/{purchase}', [PackageController::class, 'updateBooking'])->name('packages.bookings.update');
+        Route::post('packages', [PackageController::class, 'store'])->name('packages.store');
+        // Package's route key is its `code` (see Package::getRouteKeyName), so these
+        // bind by code — route() helpers generate code-based URLs automatically.
+        Route::get('packages/{package}/edit', [PackageController::class, 'edit'])->name('packages.edit');
+        Route::put('packages/{package}', [PackageController::class, 'update'])->name('packages.update');
+        Route::delete('packages/{package}', [PackageController::class, 'destroy'])->name('packages.destroy');
 
         Route::get('appointments', [AppointmentController::class, 'index'])->name('appointments.index');
         Route::put('appointments/{appointment}', [AppointmentController::class, 'update'])->name('appointments.update');
