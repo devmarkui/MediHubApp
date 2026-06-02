@@ -255,6 +255,10 @@
     "saved": "Saved",
     "version": "Version {{version}}"
   },
+  "family": {
+    "editTitle": "Edit family member",
+    "tapToEdit": "Tap to add details"
+  },
   "notifications": {
     "title": "Notifications",
     "markAllRead": "Mark all read",

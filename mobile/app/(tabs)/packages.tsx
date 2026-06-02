@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { FileText, History } from 'lucide-react-native';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Linking, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -20,6 +21,16 @@ export default function ReportsTab(): React.ReactElement {
   const router = useRouter();
   const query = useQuery({ queryKey: ['reports'], queryFn: () => reportsApi.list() });
 
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = useCallback(async (): Promise<void> => {
+    setRefreshing(true);
+    try {
+      await query.refetch();
+    } finally {
+      setRefreshing(false);
+    }
+  }, [query]);
+
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <View style={styles.header}>
@@ -29,11 +40,7 @@ export default function ReportsTab(): React.ReactElement {
       <ScrollView
         contentContainerStyle={{ padding: spacing.screen, paddingTop: 0, gap: 10 }}
         refreshControl={
-          <RefreshControl
-            refreshing={query.isFetching && !query.isLoading}
-            onRefresh={() => query.refetch()}
-            tintColor={colors.darkTeal}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.darkTeal} />
         }
       >
         {query.isLoading ? (

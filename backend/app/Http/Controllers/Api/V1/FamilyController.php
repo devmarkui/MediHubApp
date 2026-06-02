@@ -28,10 +28,16 @@ class FamilyController
         /** @var Patient $parent */
         $parent = $request->user();
 
+        // Family members don't log in, but the patients table requires a unique
+        // phone — derive a guaranteed-unique placeholder from the parent's number.
+        do {
+            $phone = $parent->phone.'-'.random_int(100000, 999999);
+        } while (Patient::query()->where('phone', $phone)->exists());
+
         $member = Patient::query()->create(array_merge(
             $request->validated(),
             [
-                'phone' => $parent->phone.'-'.substr((string) microtime(true) * 1000, -6),
+                'phone' => $phone,
                 'parent_patient_id' => $parent->id,
                 'language' => $parent->language,
             ]

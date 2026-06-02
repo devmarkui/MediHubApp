@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { CalendarPlus, ChevronRight } from 'lucide-react-native';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -37,6 +37,16 @@ export default function AppointmentsTab(): React.ReactElement {
     queryFn: () => appointmentsApi.list(filter),
   });
 
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = useCallback(async (): Promise<void> => {
+    setRefreshing(true);
+    try {
+      await query.refetch();
+    } finally {
+      setRefreshing(false);
+    }
+  }, [query]);
+
   const filters: Filter[] = ['upcoming', 'past', 'all'];
 
   return (
@@ -63,11 +73,7 @@ export default function AppointmentsTab(): React.ReactElement {
       <ScrollView
         contentContainerStyle={{ padding: spacing.screen, paddingTop: 0, gap: 12 }}
         refreshControl={
-          <RefreshControl
-            refreshing={query.isFetching && !query.isLoading}
-            onRefresh={() => query.refetch()}
-            tintColor={colors.darkTeal}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.darkTeal} />
         }
       >
         {query.isLoading ? (

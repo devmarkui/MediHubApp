@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { Bell, FileText, Package, Stethoscope } from 'lucide-react-native';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -50,13 +51,17 @@ export default function HomeScreen(): React.ReactElement {
     queryFn: () => notificationsApi.list({ unread: true }),
   });
 
-  const refreshing = config.isFetching && !config.isLoading;
-  const onRefresh = (): void => {
-    void config.refetch();
-    void upcoming.refetch();
-    void reports.refetch();
-    void unread.refetch();
-  };
+  // Only show the pull-to-refresh spinner during an actual user pull — not on
+  // background refetches (which previously flashed a spinner on every screen).
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = useCallback(async (): Promise<void> => {
+    setRefreshing(true);
+    try {
+      await Promise.all([config.refetch(), upcoming.refetch(), reports.refetch(), unread.refetch()]);
+    } finally {
+      setRefreshing(false);
+    }
+  }, [config, upcoming, reports, unread]);
 
   const reportsCount = reports.data?.length ?? 0;
   const unreadCount = unread.data?.length ?? 0;
