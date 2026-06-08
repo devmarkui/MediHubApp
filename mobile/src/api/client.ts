@@ -34,14 +34,43 @@ http.interceptors.request.use((config) => {
 http.interceptors.response.use(
   (response) => response,
   (error: AxiosError<ApiErrorBody>) => {
+    // No HTTP response: the request never reached the server (offline, server
+    // down, wrong host/port, or it timed out). Surface the specific cause and
+    // log the exact target so the failure point is obvious in dev.
     if (!error.response) {
-      logger.warn('network.error', { url: error.config?.url });
-      return Promise.reject(new ApiError('Network unavailable. Please check your connection.', 0));
+      const method = error.config?.method?.toUpperCase() ?? 'GET';
+      const target = `${error.config?.baseURL ?? ''}${error.config?.url ?? ''}`;
+      logger.warn('network.error', {
+        method,
+        target,
+        code: error.code,
+        message: error.message,
+      });
+
+      if (error.code === 'ECONNABORTED') {
+        return Promise.reject(
+          new ApiError('The server took too long to respond. Please try again.', 0),
+        );
+      }
+
+      return Promise.reject(
+        new ApiError(
+          `Can’t reach the server at ${env.apiUrl}. Make sure you’re online and the backend is running.`,
+          0,
+        ),
+      );
     }
 
     const status = error.response.status;
     const body = error.response.data;
     const message = body?.message ?? defaultMessageForStatus(status);
+
+    logger.warn('api.error', {
+      method: error.config?.method?.toUpperCase(),
+      url: error.config?.url,
+      status,
+      message,
+    });
 
     if (status === 401) {
       onUnauthorized();

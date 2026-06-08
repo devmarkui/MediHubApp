@@ -13,11 +13,13 @@ import { colors, fontFamily, radius, spacing } from '@/theme';
 type Props = TextInputProps & {
   label?: string;
   error?: string;
+  /** Show a green border to signal the value passed validation. */
+  valid?: boolean;
   containerStyle?: ViewStyle;
 };
 
 export const Input = forwardRef<TextInput, Props>(function Input(
-  { label, error, containerStyle, style, ...rest },
+  { label, error, valid, containerStyle, style, ...rest },
   ref,
 ) {
   return (
@@ -25,7 +27,11 @@ export const Input = forwardRef<TextInput, Props>(function Input(
       {label ? <Text style={styles.label}>{label}</Text> : null}
       <TextInput
         ref={ref}
-        style={[styles.input, error ? styles.inputError : null, style]}
+        style={[
+          styles.input,
+          error ? styles.inputError : valid ? styles.inputValid : null,
+          style,
+        ]}
         placeholderTextColor={colors.textTertiary}
         accessibilityLabel={label ?? rest.accessibilityLabel}
         {...rest}
@@ -57,7 +63,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
   },
   inputError: {
+    borderWidth: 1,
     borderColor: colors.danger,
+  },
+  inputValid: {
+    borderWidth: 1,
+    borderColor: colors.darkTeal,
   },
   error: {
     marginTop: spacing.xxs,

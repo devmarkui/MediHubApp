@@ -257,7 +257,27 @@
   },
   "family": {
     "editTitle": "Edit family member",
-    "tapToEdit": "Tap to add details"
+    "tapToEdit": "Tap to add details",
+    "tapToView": "Tap to view details",
+    "selectDob": "Select Date of Birth",
+    "dobLabel": "Date of birth",
+    "namePlaceholder": "e.g. Aadhil Manshaf",
+    "detailsTitle": "Family member",
+    "personalInfo": "Personal information",
+    "medicalInfo": "Medical information",
+    "age": "Age",
+    "yearsShort": "yrs",
+    "allergies": "Allergies",
+    "conditions": "Existing conditions",
+    "emergency": "Emergency contact",
+    "viewOnly": "View only",
+    "removeMember": "Remove family member",
+    "removeTitle": "Remove family member",
+    "removeConfirm": "Are you sure you want to remove this family member?",
+    "notFound": "Member not found",
+    "notFoundBody": "This family member is no longer available.",
+    "emptyTitle": "No Family Members Added Yet",
+    "emptyBody": "Add the people you care for to manage their health in one place."
   },
   "notifications": {
     "title": "Notifications",

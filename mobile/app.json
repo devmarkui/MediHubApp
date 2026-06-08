@@ -53,7 +53,8 @@
         {
           "photosPermission": "MediHub uses your photo library so you can upload a profile photo."
         }
-      ]
+      ],
+      "@react-native-community/datetimepicker"
     ],
     "experiments": {
       "typedRoutes": true

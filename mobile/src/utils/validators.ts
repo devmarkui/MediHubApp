@@ -69,9 +69,56 @@ export const profileSchema = z.object({
   weight_kg: weightField,
 });
 
+// Parse a date-only `yyyy-MM-dd` string into a local Date (null if malformed).
+function parseDob(v: string): Date | null {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v);
+  if (!m) return null;
+  const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function ageInYears(d: Date): number {
+  const now = new Date();
+  let age = now.getFullYear() - d.getFullYear();
+  const monthDiff = now.getMonth() - d.getMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < d.getDate())) age -= 1;
+  return age;
+}
+
+// Required DOB: not empty, a real date, not in the future, at most 120 years
+// old. Refinements are ordered so the most specific message surfaces first.
+export const dobSchema = z
+  .string({ required_error: 'Please select date of birth' })
+  .min(1, 'Please select date of birth')
+  .refine((v) => parseDob(v) !== null, 'Please enter a valid date of birth')
+  .refine((v) => {
+    const d = parseDob(v);
+    if (!d) return true; // earlier refine reports the format error
+    const now = new Date();
+    const todayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+    return d.getTime() <= todayEnd.getTime();
+  }, 'Date of birth cannot be in the future')
+  .refine((v) => {
+    const d = parseDob(v);
+    if (!d) return true;
+    const age = ageInYears(d);
+    return age >= 0 && age <= 120;
+  }, 'Please enter a valid date of birth');
+
+// Strong full-name rule set. Letters plus spaces, apostrophes and hyphens only;
+// no numbers, no leading/trailing or doubled spaces. Ordered for clear messages.
+export const fullNameSchema = z
+  .string({ required_error: 'Please enter full name' })
+  .refine((v) => v.trim().length > 0, 'Please enter full name')
+  .refine((v) => v.trim().length >= 2, 'Name must be at least 2 characters')
+  .refine((v) => v.trim().length <= 50, 'Please enter a valid full name')
+  .refine((v) => !/\d/.test(v), 'Name cannot contain numbers')
+  .refine((v) => /^[A-Za-z]+(?:[ '-][A-Za-z]+)*$/.test(v.trim()), 'Please enter a valid full name')
+  .refine((v) => !/\s{2,}/.test(v), 'Please enter a valid full name');
+
 export const familyMemberSchema = z.object({
-  name: z.string().min(2).max(120),
-  dob: z.string().optional(),
+  name: fullNameSchema,
+  dob: dobSchema,
   gender: z.enum(['male', 'female', 'other']).optional(),
   blood_group: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']).optional(),
 });
